@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="bg-auxiliary">
     <NavBar :active-section="activeSection" />
 
     <v-main>
@@ -24,11 +24,13 @@
       </section>
     </v-main>
 
-    <v-footer app class="d-flex justify-center">
-      <div class="text-center">
-        &copy; {{ new Date().getFullYear() }} - David Michael Zea Leandres
-      </div>
-    </v-footer>
+    <v-card app class="bg-transparent">
+      <v-card-text class="d-flex justify-center">
+        <v-chip color="secondary" class="text-center font-weight-bold">
+          &copy; {{ new Date().getFullYear() }} - David Michael Zea Leandres
+        </v-chip>
+      </v-card-text>
+    </v-card>
   </v-app>
 </template>
 
@@ -41,17 +43,14 @@ import ProjectsSection from './components/ProjectsSection.vue';
 import SkillsSection from './components/SkillsSection.vue';
 import ContactSection from './components/ContactSection.vue';
 
-// References to each section
 const homeSection = ref<HTMLElement | null>(null);
 const aboutSection = ref<HTMLElement | null>(null);
 const projectsSection = ref<HTMLElement | null>(null);
 const skillsSection = ref<HTMLElement | null>(null);
 const contactSection = ref<HTMLElement | null>(null);
 
-// Active section for navigation highlighting
 const activeSection = ref('home');
 
-// Function to check which section is in view
 const checkActiveSection = () => {
   const scrollPosition = window.scrollY + 100; // Adding offset for navbar height
 
@@ -88,7 +87,6 @@ const scrollToSection = (sectionId: string) => {
   }
 };
 
-// Set up scroll event listener
 onMounted(() => {
   window.addEventListener('scroll', checkActiveSection);
   checkActiveSection();
@@ -104,5 +102,29 @@ onUnmounted(() => {
   min-height: 100vh;
   padding: 80px 20px 20px;
   scroll-margin-top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#home {
+  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+}
+
+#about {
+  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+}
+
+#projects {
+  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+}
+
+#skills {
+  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+}
+
+#contact {
+  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app elevation="1" class="px-4">
+  <v-app-bar app elevation="1" class="px-4 bg-grey-lighten-2" rounded="xs">
     <v-app-bar-title class="font-weight-bold">David Zea</v-app-bar-title>
 
     <v-spacer></v-spacer>
@@ -51,14 +51,12 @@ const navItems = [
   { id: "contact", title: "Contáctame" },
 ];
 
-// 📌 Función para hacer scroll de forma fluida
 const scrollToSection = (sectionId: string) => {
   drawer.value = false;
   const element = document.getElementById(sectionId);
   element?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-// 📌 Función para actualizar la sección activa en base al scroll
 const updateActiveSection = () => {
   const scrollPosition = window.scrollY + 100; // Margen de detección
 
@@ -70,9 +68,15 @@ const updateActiveSection = () => {
   }
 };
 
-// 📌 Agregar y quitar el listener de scroll
-onMounted(() => window.addEventListener("scroll", updateActiveSection));
-onUnmounted(() => window.removeEventListener("scroll", updateActiveSection));
+onMounted(() => {
+  window.addEventListener("scroll", updateActiveSection);
+  window.scrollTo({ top: 0, behavior: "instant" });
+  activeSection.value = "home";
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", updateActiveSection);
+});
 </script>
 
 <style scoped>
