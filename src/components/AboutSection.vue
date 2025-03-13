@@ -33,7 +33,7 @@
         </p>
 
         <p class="text-h6 mb-4 font-weight-medium">
-          💻 Con más de <strong>2 años de experiencia</strong> en el sector
+          💻 Cuento con más de <strong>2 años de experiencia</strong> en el sector
           privado, me especializo en crear aplicaciones web modernas, aplicando
           <strong>buenas prácticas</strong> y asegurando un
           <strong>código de calidad</strong>.
@@ -49,13 +49,13 @@
           >.
         </p>
 
-        <p class="text-h6 mb-4 font-weight-medium">
+<!--        <p class="text-h6 mb-4 font-weight-medium">
           📩 Actualmente, estoy abierto a nuevas oportunidades donde pueda
           aportar mis conocimientos y seguir evolucionando. ¡Hablemos y creemos
           algo increíble juntos!
-        </p>
+        </p>-->
 
-        <v-btn color="primary" variant="outlined" class="mt-4">
+        <v-btn color="primary" variant="outlined" class="mt-4" @click="downloadCV">
           <Download class="icon-left" size="20"></Download>
           Descargar CV
         </v-btn>
@@ -76,6 +76,15 @@ const scrollToSection = (sectionId: string) => {
       behavior: "smooth",
     });
   }
+};
+const downloadCV = () => {
+  const cvUrl = 'public/docs/cv.pdf';
+  const link = document.createElement('a');
+  link.href = cvUrl;
+  link.download = 'Mi_CV.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 </script>
 

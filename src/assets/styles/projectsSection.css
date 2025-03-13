@@ -1,0 +1,174 @@
+.accent-bar {
+  width: 100px;
+  height: 4px;
+  background-color: rgb(var(--v-theme-primary));
+  border-radius: 4px;
+}
+
+.description-text {
+  max-width: 700px;
+  opacity: 0.85;
+}
+
+/* Estilos para tarjetas de proyectos */
+.project-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.project-card.on-hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.15);
+}
+
+.project-image {
+  transition: transform 0.6s ease;
+}
+
+.on-hover .project-image {
+  transform: scale(1.05);
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.project-button {
+  transition: transform 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.project-button:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para la vista de lista */
+.v-timeline-item {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.v-timeline-item:hover {
+  transform: translateX(8px);
+}
+
+.timeline-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-image {
+  transition: transform 0.6s ease;
+}
+
+.timeline-card:hover .timeline-image {
+  transform: scale(1.1);
+}
+
+.timeline-title {
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.timeline-title::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background-color: rgb(var(--v-theme-primary));
+  bottom: 0;
+  left: 0;
+  border-radius: 1px;
+}
+
+/* Estilos para la ventana de detalles */
+.project-detail-card {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.detail-header-image {
+  filter: saturate(1.2);
+}
+
+.project-description {
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.detail-section {
+  background-color: rgba(var(--v-theme-surface-variant), 0.1);
+  padding: 24px;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.detail-heading {
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+}
+
+.detail-text {
+  line-height: 1.8;
+}
+
+.tech-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Estilos para la galería de imágenes */
+.gallery-card {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+.gallery-image {
+  transition:
+    transform 0.5s ease,
+    filter 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-card.on-hover .gallery-image {
+  transform: scale(1.05);
+  filter: brightness(0.7);
+}
+
+.view-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease;
+}
+
+/* Estilos para el diálogo de imagen ampliada */
+.image-dialog-card {
+  background-color: transparent;
+  position: relative;
+}
+
+.image-dialog-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.close-image-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+.full-image {
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}

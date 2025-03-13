@@ -9,7 +9,7 @@ export default defineConfig({
   base: '/david-zea-portafolio/',
   plugins: [
     vue(),
-    vueDevTools(),
+    //vueDevTools(),
   ],
   resolve: {
     alias: {
