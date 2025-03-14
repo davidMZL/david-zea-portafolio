@@ -406,6 +406,10 @@ const selectedProjectIndex = ref(0);
 const imageDialog = ref(false);
 const selectedImage = ref("");
 
+const imagenMainAssistance = new URL(
+  "@/assets/images/assistance/assistanceMain.png",
+  import.meta.url,
+).href;
 const imageAssistanceProject = ref([
   new URL("@/assets/images/assistance/assistance1.png", import.meta.url).href,
   new URL("@/assets/images/assistance/assistance2.png", import.meta.url).href,
@@ -414,6 +418,10 @@ const imageAssistanceProject = ref([
   new URL("@/assets/images/assistance/assistance5.png", import.meta.url).href,
 ]);
 
+const imagenMainMedical = new URL(
+  "@/assets/images/medicalFile/medicalMain.png",
+  import.meta.url,
+).href;
 const imageMedicalProject = ref([
   new URL("@/assets/images/medicalFile/medicalFile1.png", import.meta.url).href,
   new URL("@/assets/images/medicalFile/medicalFile2.png", import.meta.url).href,
@@ -438,7 +446,7 @@ const projects = ref([
       "AWS Amplify",
       "Node.js",
     ],
-    image: "src/assets/images/assistance/medic-emergency.png",
+    image: imagenMainAssistance,
     imageResults: imageAssistanceProject,
   },
   {
@@ -457,7 +465,7 @@ const projects = ref([
       "AWS Amplify",
       "Node.js",
     ],
-    image: "src/assets/images/medicalFile/medical-login.png",
+    image: imagenMainMedical,
     imageResults: imageMedicalProject,
   },
 ]);
