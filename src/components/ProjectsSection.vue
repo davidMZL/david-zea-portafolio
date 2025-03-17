@@ -432,7 +432,7 @@ const imageMedicalProject = ref([
 const projects = ref([
   {
     title: "Assistance-SOS",
-    description: "Desarrollé e integré la plataforma web AssistanceSOS.",
+    description: "Desarrollé la plataforma web AssistanceSOS.",
     objetives:
       "Monitoreo de ambulancias en tiempo real, y subasta de casos en tiempo real.",
     resume:
@@ -453,7 +453,7 @@ const projects = ref([
     title: "MedicalFile",
     description: "Desarrollé la plataforma web MedicalFile.",
     objetives:
-      "Monitoreo de unidades de transporte de la clínica en tiempo real, control y gestión de medicamentos.",
+      "Plataforma para la gestión de medicamentos y monitoreo de unidades de transporte clínico en tiempo real.",
     resume:
       "MedicalFile es una Plataforma web para la gestión de ambulancias, medicamentos, y de historial médico en tiempo real.",
     timeBuilding: "6 meses",

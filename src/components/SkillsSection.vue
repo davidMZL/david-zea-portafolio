@@ -1,11 +1,19 @@
 <template>
-  <v-container class="py-12">
+  <v-container class="py-12 skill-section">
     <v-row>
       <v-col cols="12" class="text-center mb-8">
-        <h2 class="text-h3 font-weight-bold mb-2">Habilidades</h2>
-        <div class="mx-auto" style="width: 100px; height: 4px; background-color: rgb(var(--v-theme-primary))"></div>
-        <p class="mt-4 text-body-1 mx-auto" style="max-width: 700px">
-          Estas son las tecnologías y herramientas con las que trabajo regularmente.
+        <h2
+          class="text-h3 font-weight-bold mb-2 animate__animated animate__fadeInDown"
+        >
+          Habilidades
+        </h2>
+        <div class="divider animate__animated animate__fadeIn"></div>
+        <p
+          class="mt-4 text-body-1 mx-auto animate__animated animate__fadeInUp"
+          style="max-width: 700px"
+        >
+          Estas son las tecnologías y herramientas con las que trabajo
+          regularmente.
         </p>
       </v-col>
     </v-row>
@@ -13,113 +21,47 @@
     <v-row>
       <v-col cols="12">
         <v-tabs
-            v-model="activeTab"
-            centered
-            grow
-            color="primary"
+          v-model="activeTab"
+          centered
+          grow
+          color="primary"
+          class="animate__animated animate__fadeIn"
         >
-          <v-tab value="frontend">Frontend</v-tab>
-          <v-tab value="backend">Backend</v-tab>
-          <v-tab value="tools">Herramientas</v-tab>
-          <v-tab value="soft">Soft Skills</v-tab>
+          <v-tab v-for="tab in tabs" :key="tab.value" :value="tab.value">
+            {{ tab.label }}
+          </v-tab>
         </v-tabs>
 
         <v-window v-model="activeTab" class="mt-6">
-          <v-window-item value="frontend">
+          <v-window-item
+            v-for="tab in tabs"
+            :key="tab.value"
+            :value="tab.value"
+          >
             <v-row>
               <v-col
-                  v-for="(skill, index) in frontendSkills"
-                  :key="index"
-                  cols="6"
-                  sm="4"
-                  md="3"
-                  class="text-center mb-6"
+                v-for="(skill, index) in skillsMap[tab.value]"
+                :key="index"
+                cols="6"
+                sm="4"
+                md="3"
+                class="text-center mb-6"
               >
-                <v-card class="mx-auto skill-card" height="100%" max-width="200">
+                <v-card
+                  class="mx-auto skill-card animate__animated animate__zoomIn"
+                  height="100%"
+                  max-width="200"
+                  elevation="4"
+                >
                   <v-card-text class="d-flex flex-column align-center">
-                    <v-icon size="x-large" color="primary" class="mb-4">{{ skill.icon }}</v-icon>
-                    <h3 class="text-h6 font-weight-bold mb-2">{{ skill.name }}</h3>
-                    <v-rating
-                        v-model="skill.level"
-                        color="amber"
-                        density="compact"
-                        half-increments
-                        readonly
-                    ></v-rating>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-window-item>
-
-          <v-window-item value="backend">
-            <v-row>
-              <v-col
-                  v-for="(skill, index) in backendSkills"
-                  :key="index"
-                  cols="6"
-                  sm="4"
-                  md="3"
-                  class="text-center mb-6"
-              >
-                <v-card class="mx-auto skill-card" height="100%" max-width="200">
-                  <v-card-text class="d-flex flex-column align-center">
-                    <v-icon size="x-large" color="primary" class="mb-4">{{ skill.icon }}</v-icon>
-                    <h3 class="text-h6 font-weight-bold mb-2">{{ skill.name }}</h3>
-                    <v-rating
-                        v-model="skill.level"
-                        color="amber"
-                        density="compact"
-                        half-increments
-                        readonly
-                    ></v-rating>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-window-item>
-
-          <v-window-item value="tools">
-            <v-row>
-              <v-col
-                  v-for="(skill, index) in toolsSkills"
-                  :key="index"
-                  cols="6"
-                  sm="4"
-                  md="3"
-                  class="text-center mb-6"
-              >
-                <v-card class="mx-auto skill-card" height="100%" max-width="200">
-                  <v-card-text class="d-flex flex-column align-center">
-                    <v-icon size="x-large" color="primary" class="mb-4">{{ skill.icon }}</v-icon>
-                    <h3 class="text-h6 font-weight-bold mb-2">{{ skill.name }}</h3>
-                    <v-rating
-                        v-model="skill.level"
-                        color="amber"
-                        density="compact"
-                        half-increments
-                        readonly
-                    ></v-rating>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-window-item>
-
-          <v-window-item value="soft">
-            <v-row>
-              <v-col
-                  v-for="(skill, index) in softSkills"
-                  :key="index"
-                  cols="6"
-                  sm="4"
-                  md="3"
-                  class="text-center mb-6"
-              >
-                <v-card class="mx-auto skill-card" height="100%" max-width="200">
-                  <v-card-text class="d-flex flex-column align-center">
-                    <v-icon size="x-large" color="primary" class="mb-4">{{ skill.icon }}</v-icon>
-                    <h3 class="text-h6 font-weight-bold mb-2">{{ skill.name }}</h3>
+                    <img
+                      :src="skill.icon"
+                      :alt="skill.name"
+                      class="skill-icon mb-4"
+                    />
+                    <h3 class="text-h6 font-weight-bold mb-2">
+                      {{ skill.name }}
+                    </h3>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -132,62 +74,87 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const activeTab = ref('frontend');
+const logoModules = import.meta.glob("@/assets/logo/*.svg", { eager: true });
 
-const frontendSkills = ref([
-  { name: 'HTML5', level: 4.5, icon: 'mdi-language-html5' },
-  { name: 'CSS3', level: 4, icon: 'mdi-language-css3' },
-  { name: 'JavaScript', level: 4.5, icon: 'mdi-language-javascript' },
-  { name: 'TypeScript', level: 4, icon: 'mdi-language-typescript' },
-  { name: 'Vue.js', level: 4.5, icon: 'mdi-vuejs' },
-  { name: 'Vuetify', level: 4, icon: 'mdi-vuetify' },
-  { name: 'Tailwind CSS', level: 3.5, icon: 'mdi-tailwind' },
-  { name: 'Responsive Design', level: 4, icon: 'mdi-responsive' }
-]);
+const logos = Object.fromEntries(
+  Object.entries(logoModules).map(([path, module]) => {
+    const name = path.split("/").pop()?.replace(".svg", "") ?? "";
+    return [name, (module as { default: string }).default];
+  }),
+);
 
-const backendSkills = ref([
-  { name: 'Node.js', level: 4, icon: 'mdi-nodejs' },
-  { name: 'Express', level: 3.5, icon: 'mdi-server' },
-  { name: 'MongoDB', level: 3.5, icon: 'mdi-database' },
-  { name: 'MySQL', level: 3, icon: 'mdi-database-outline' },
-  { name: 'Firebase', level: 3.5, icon: 'mdi-firebase' },
-  { name: 'RESTful APIs', level: 4, icon: 'mdi-api' },
-  { name: 'GraphQL', level: 3, icon: 'mdi-graphql' },
-  { name: 'PHP', level: 3, icon: 'mdi-language-php' }
-]);
+const activeTab = ref("frontend");
 
-const toolsSkills = ref([
-  { name: 'Git', level: 4, icon: 'mdi-git' },
-  { name: 'GitHub', level: 4, icon: 'mdi-github' },
-  { name: 'VS Code', level: 4.5, icon: 'mdi-microsoft-visual-studio-code' },
-  { name: 'Webpack', level: 3.5, icon: 'mdi-webpack' },
-  { name: 'Docker', level: 3, icon: 'mdi-docker' },
-  { name: 'Figma', level: 3.5, icon: 'mdi-figma' },
-  { name: 'Jest', level: 3, icon: 'mdi-test-tube' },
-  { name: 'NPM', level: 4, icon: 'mdi-npm' }
-]);
+const tabs = [
+  { value: "frontend", label: "Frontend" },
+  { value: "tools", label: "Herramientas" },
+];
 
-const softSkills = ref([
-  { name: 'Comunicación', icon: 'mdi-account-voice' },
-  { name: 'Trabajo en Equipo', icon: 'mdi-account-group' },
-  { name: 'Resolución de Problemas', icon: 'mdi-lightbulb-on' },
-  { name: 'Gestión del Tiempo', icon: 'mdi-clock-time-four' },
-  { name: 'Adaptabilidad', icon: 'mdi-refresh' },
-  { name: 'Creatividad', icon: 'mdi-palette' },
-  { name: 'Atención al Detalle', icon: 'mdi-magnify-plus' },
-  { name: 'Aprendizaje Continuo', icon: 'mdi-school' }
-]);
+const frontendSkills = [
+  { name: "HTML5", icon: logos.html5 },
+  { name: "CSS3", icon: logos.css3 },
+  { name: "JavaScript", icon: logos.javascript },
+  { name: "TypeScript", icon: logos.typescript },
+  { name: "Vue.js", icon: logos.vuejs },
+  { name: "Tailwind CSS", icon: logos.tailwind },
+  { name: "Google Maps API", icon: logos.googleMaps },
+  { name: "Leaflet", icon: logos.leaflet },
+  { name: "Pinia Store", icon: logos.piniaStore },
+  { name: "Vuex", icon: logos.vuex },
+];
+
+const toolsSkills = [
+  { name: "Git", icon: logos.git },
+  { name: "GitHub", icon: logos.github },
+  { name: "GitLab", icon: logos.gitlab },
+  { name: "Terminal", icon: logos.terminal },
+  { name: "NPM", icon: logos.npm },
+  { name: "AWS Amplify", icon: logos.aws },
+  { name: "Firebase", icon: logos.firebase },
+  { name: "Vite", icon: logos.vite },
+  { name: "Vuetify", icon: logos.vuetify },
+];
+
+const skillsMap: any = {
+  frontend: frontendSkills,
+  tools: toolsSkills,
+};
 </script>
 
 <style scoped>
+.divider {
+  width: 100px;
+  height: 4px;
+  margin: 0 auto;
+}
+
 .skill-card {
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .skill-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+.skill-icon {
+  width: 50px;
+}
+
+.v-tab {
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.v-window-item {
+  padding: 1rem 0;
 }
 </style>

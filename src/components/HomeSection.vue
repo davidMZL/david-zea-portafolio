@@ -9,17 +9,12 @@
         <div class="position-relative">
           <h1 class="text-h2 font-weight-bold mb-2">David Zea</h1>
           <h2 class="text-h4 mb-6 text-grey300">Desarrollador Front-End</h2>
-          <h3 class="text-subtitle-1 mb-6">
-            Creando experiencias digitales
-            <span class="font-weight-bold">memorables</span> y
-            <span class="font-weight-bold">funcionales</span>
-          </h3>
           <div class="mt-8 d-flex flex-wrap gap-4">
             <v-btn
               color="primary"
               size="large"
               elevation="2"
-              class="text-none px-6"
+              class="text-none px-6 mr-4"
               @click="scrollToSection('projects')"
               rounded
             >
@@ -30,7 +25,7 @@
             <v-btn
               variant="outlined"
               size="large"
-              class="text-none px-6"
+              class="text-none px-6 ml-4"
               @click="scrollToSection('contact')"
               rounded
             >
@@ -103,11 +98,11 @@ const scrollToSection = (sectionId: string) => {
 };
 
 const getImageSrc = new URL(
-  "@/assets/coding-work-from-home.gif",
+  "@/assets/gif/coding-work-from-home.gif",
   import.meta.url,
 ).href;
 
-const getImageMouse = new URL("@/assets/mouse-animation.gif", import.meta.url)
+const getImageMouse = new URL("@/assets/gif/mouse-animation.gif", import.meta.url)
   .href;
 
 onMounted(() => {

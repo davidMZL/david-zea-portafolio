@@ -1,5 +1,7 @@
 <template>
-  <v-app class="bg-auxiliary">
+  <v-app>
+    <Fireflies class="fireflies-wrapper" />
+
     <NavBar :active-section="activeSection" />
 
     <v-main>
@@ -24,8 +26,8 @@
       </section>
     </v-main>
 
-    <v-card app class="bg-transparent">
-      <v-card-text class="d-flex justify-center">
+    <v-card width="100%" flat color="transparent" class="text-center">
+      <v-card-text>
         <v-chip color="secondary" class="text-center font-weight-bold">
           &copy; {{ new Date().getFullYear() }} - David Michael Zea Leandres
         </v-chip>
@@ -35,31 +37,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import NavBar from './components/NavBar.vue';
-import HomeSection from './components/HomeSection.vue';
-import AboutSection from './components/AboutSection.vue';
-import ProjectsSection from './components/ProjectsSection.vue';
-import SkillsSection from './components/SkillsSection.vue';
-import ContactSection from './components/ContactSection.vue';
-
+import { ref, onMounted, onUnmounted } from "vue";
+import NavBar from "./components/NavBar.vue";
+import HomeSection from "./components/HomeSection.vue";
+import AboutSection from "./components/AboutSection.vue";
+import ProjectsSection from "./components/ProjectsSection.vue";
+import SkillsSection from "./components/SkillsSection.vue";
+import ContactSection from "./components/ContactSection.vue";
+import Fireflies from "./components/Fireflies.vue";
 const homeSection = ref<HTMLElement | null>(null);
 const aboutSection = ref<HTMLElement | null>(null);
 const projectsSection = ref<HTMLElement | null>(null);
 const skillsSection = ref<HTMLElement | null>(null);
 const contactSection = ref<HTMLElement | null>(null);
 
-const activeSection = ref('home');
+const activeSection = ref("home");
 
 const checkActiveSection = () => {
-  const scrollPosition = window.scrollY + 100; // Adding offset for navbar height
+  const scrollPosition = window.scrollY + 100;
 
   const sections = [
-    { id: 'home', ref: homeSection },
-    { id: 'about', ref: aboutSection },
-    { id: 'projects', ref: projectsSection },
-    { id: 'skills', ref: skillsSection },
-    { id: 'contact', ref: contactSection }
+    { id: "home", ref: homeSection },
+    { id: "about", ref: aboutSection },
+    { id: "projects", ref: projectsSection },
+    { id: "skills", ref: skillsSection },
+    { id: "contact", ref: contactSection },
   ];
 
   for (const section of sections) {
@@ -76,28 +78,18 @@ const checkActiveSection = () => {
   }
 };
 
-// Scroll to section when clicking on nav links
-const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    window.scrollTo({
-      top: element.offsetTop - 64, // Adjust for navbar height
-      behavior: 'smooth'
-    });
-  }
-};
-
 onMounted(() => {
-  window.addEventListener('scroll', checkActiveSection);
+  window.addEventListener("scroll", checkActiveSection);
   checkActiveSection();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', checkActiveSection);
+  window.removeEventListener("scroll", checkActiveSection);
 });
 </script>
 
 <style>
+/* Estilos para las secciones */
 .section {
   min-height: 100vh;
   padding: 80px 20px 20px;
@@ -105,26 +97,25 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  position: relative; /* Para que se posicione correctamente sobre el fondo */
 }
 
-#home {
-  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+/* Estilos para el wrapper de Fireflies */
+.fireflies-wrapper {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.v-main {
+  position: relative;
+  z-index: 1;
 }
 
-#about {
-  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
-}
-
-#projects {
-  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
-}
-
-#skills {
-  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
-}
-
-#contact {
-  background: radial-gradient(circle at center, rgba(42, 62, 152), #0A001B);
+.v-app-bar {
+  z-index: 2;
 }
 </style>
