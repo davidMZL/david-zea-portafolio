@@ -1,10 +1,35 @@
 <template>
   <v-container class="py-12">
-    <v-row>
-      <v-col cols="12" class="text-center mb-8">
-        <h2 class="text-h3 font-weight-bold mb-2">Proyectos</h2>
-        <div class="mx-auto accent-bar"></div>
-        <p class="mt-4 text-body-1 mx-auto description-text">
+    <v-row class="justify-center align-center text-center mb-4">
+      <v-col
+        cols="12"
+        md="6"
+        lg="4"
+        class="d-flex justify-center"
+        style="
+          transition: all 0.3s ease;
+          border-radius: 12px;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        "
+      >
+        <p class="text-h3 description-text text-blank">Proyectos</p>
+      </v-col>
+    </v-row>
+    <v-row class="justify-center align-center text-center">
+      <v-col
+        cols="12"
+        md="12"
+        class="d-flex justify-center"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          backdrop-filter: blur(10px);
+        "
+      >
+        <p class="text-h5 description-text text-blank">
           Estos son algunos de los proyectos en los que he trabajado.
         </p>
       </v-col>

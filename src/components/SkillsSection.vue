@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-12 skill-section">
     <v-row>
-      <v-col cols="12" class="text-center mb-8">
+      <v-col cols="12" class="text-center mb-8 skill-card text-blank">
         <h2
           class="text-h3 font-weight-bold mb-2 animate__animated animate__fadeInDown"
         >
@@ -19,12 +19,12 @@
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" class="skill-card">
         <v-tabs
           v-model="activeTab"
           centered
           grow
-          color="primary"
+          color="blank"
           class="animate__animated animate__fadeIn"
         >
           <v-tab v-for="tab in tabs" :key="tab.value" :value="tab.value">
@@ -88,8 +88,8 @@ const logos = Object.fromEntries(
 const activeTab = ref("frontend");
 
 const tabs = [
-  { value: "frontend", label: "Frontend" },
-  { value: "tools", label: "Herramientas" },
+  { value: "frontend", label: "FRONTEND" },
+  { value: "tools", label: "HERRAMIENTAS" },
 ];
 
 const frontendSkills = [
@@ -140,7 +140,7 @@ const skillsMap: any = {
 }
 
 .skill-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-1px);
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
 }
 

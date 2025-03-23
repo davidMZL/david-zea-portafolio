@@ -1,9 +1,20 @@
 <template>
-  <v-container class="py-12">
-    <v-row>
-      <v-col cols="12" class="text-center mb-8">
-        <h2 class="text-h3 font-weight-bold mb-2">Sobre Mí</h2>
-        <div class="mx-auto" style="width: 100px; height: 4px"></div>
+  <v-container class="py-12 text-blank">
+    <v-row class="justify-center align-center text-center mb-4">
+      <v-col
+        cols="12"
+        md="3"
+        class="d-flex justify-center"
+        style="
+          transition: all 0.3s ease;
+          border-radius: 12px;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        "
+      >
+        <p class="text-h3 text-blank">Sobre Mí</p>
       </v-col>
     </v-row>
 
@@ -21,7 +32,11 @@
         ></v-img>
       </v-col>
 
-      <v-col cols="12" md="8" class="animate__animated animate__fadeInRight">
+      <v-col
+        cols="12"
+        md="8"
+        class="animate__animated animate__fadeInRight about-card"
+      >
         <div class="about-content">
           <p class="text-h6 mb-6 font-weight-medium">
             ¡Hola! Soy <strong class="highlight">David Zea</strong>,
@@ -106,6 +121,20 @@ const downloadCV = () => {
 </script>
 
 <style scoped>
+.about-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
 p {
   line-height: 1.8;
   letter-spacing: 0.3px;

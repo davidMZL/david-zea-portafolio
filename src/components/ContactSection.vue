@@ -1,91 +1,34 @@
 <template>
   <v-container class="py-12">
     <v-row>
-      <v-col cols="12" class="text-center mb-8">
-        <h2 class="text-h3 font-weight-bold mb-2">Contáctame</h2>
-        <div class="mx-auto divider"></div>
+      <v-col cols="12" class="text-center mb-5">
+        <v-card-title class="text-center align-center card-hover">
+          <span class="text-center font-weight-bold text-h3 text-grey300">
+            Contáctame
+          </span>
+          <div class="mx-auto divider"></div>
+        </v-card-title>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="12" md="5" class="mb-8 mb-md-0">
-        <v-card class="pa-6 h-100 elevation-3 card-hover">
-          <h3 class="text-h5 font-weight-bold mb-6 text-primary">
-            Información de Contacto
-          </h3>
-
-          <div class="contact-item">
-            <v-icon color="primary" class="mr-4"
-              ><MailIcon :size="24"
-            /></v-icon>
-            <div>
-              <div class="text-body-1 font-weight-medium">Email</div>
-              <a
-                href="mailto:david.zealeandres.dev@gmail.com"
-                class="contact-link"
-                >david.zealeandres.dev@gmail.com</a
-              >
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <v-icon color="primary" class="mr-4"
-              ><PhoneCallIcon :size="24"
-            /></v-icon>
-            <div>
-              <div class="text-body-1 font-weight-medium">Teléfono</div>
-              <a href="tel:+51966638878" class="contact-link"
-                >+51 966 638 878</a
-              >
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <v-icon color="primary" class="mr-4"><MapPin :size="24" /></v-icon>
-            <div>
-              <div class="text-body-1 font-weight-medium">Ubicación</div>
-              <span>Ayacucho, Perú</span>
-            </div>
-          </div>
-
-          <h3 class="text-h5 font-weight-bold mt-8 mb-4 text-primary">
-            Redes Sociales
-          </h3>
-
-          <div class="social-links">
-            <a
-              href="https://github.com/davidMZL"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <v-btn icon variant="text"><Github :size="24" /></v-btn>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/david-michael-zea-leandres-461892211/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <v-btn icon variant="text"><Linkedin :size="24" /></v-btn>
-            </a>
-          </div>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="7">
-        <v-card class="pa-6 elevation-3 card-hover">
-          <h3 class="text-h5 font-weight-bold mb-6 text-primary">
+      <v-col cols="12" md="12">
+        <v-card class="pa-8 elevation-3 card-hover">
+          <h3 class="text-h5 font-weight-bold mb-6 text-secondary">
             Envíame un Mensaje
           </h3>
 
-          <v-form ref="form" v-model="isFormValid">
+          <v-form ref="form">
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="formData.name"
                   label="Nombre"
                   variant="outlined"
-                  class="custom-input"
-                ></v-text-field>
+                  class="text-blank"
+                  :rules="[rules.required]"
+                  rounded
+                />
               </v-col>
 
               <v-col cols="12" sm="6">
@@ -93,17 +36,10 @@
                   v-model="formData.email"
                   label="Email"
                   variant="outlined"
-                  class="custom-input"
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-text-field
-                  v-model="formData.subject"
-                  label="Asunto"
-                  variant="outlined"
-                  class="custom-input"
-                ></v-text-field>
+                  class="text-blank"
+                  :rules="[rules.required, rules.email]"
+                  rounded
+                />
               </v-col>
 
               <v-col cols="12">
@@ -112,32 +48,27 @@
                   label="Mensaje"
                   variant="outlined"
                   rows="5"
-                  class="custom-input"
-                ></v-textarea>
+                  class="text-blank"
+                  :rules="[rules.required]"
+                  rounded
+                />
               </v-col>
+            </v-row>
 
-              <v-col cols="12">
+            <v-row class="justify-center align-center text-center">
+              <v-col cols="4">
                 <v-btn
                   color="primary"
-                  size="large"
-                  block
                   :loading="isSubmitting"
-                  :disabled="!isFormValid"
+                  :disabled="!isFormValid || isSubmitting"
                   @click="submitForm"
+                  rounded
                 >
                   Enviar Mensaje
                 </v-btn>
               </v-col>
             </v-row>
           </v-form>
-
-          <v-snackbar
-            v-model="snackbar.show"
-            :color="snackbar.color"
-            timeout="3000"
-          >
-            {{ snackbar.text }}
-          </v-snackbar>
         </v-card>
       </v-col>
     </v-row>
@@ -145,31 +76,66 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
+import emailjs from "@emailjs/browser";
 import {
-  MailIcon,
-  Github,
-  Linkedin,
-  MapPin,
-  PhoneCallIcon,
-} from "lucide-vue-next";
+  EMAILJS_PUBLIC_KEY,
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+} from "@/common/env-variables.ts";
+import { toast } from "vue3-toastify";
 
-const form = ref(null);
+const form = ref();
 const isFormValid = ref(false);
 const isSubmitting = ref(false);
 
-const formData = reactive({ name: "", email: "", subject: "", message: "" });
-const snackbar = reactive({ show: false, text: "", color: "success" });
+const formData = ref({ name: "", email: "", message: "" });
+
+const rules = {
+  required: (value: string) => !!value || "Este campo es requerido",
+  email: (value: string) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(value) || "example-email@your-email.com";
+  },
+};
 
 const submitForm = async () => {
+  if (!formData.value.name || !formData.value.email || !formData.value.message)
+    return;
+
   isSubmitting.value = true;
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  snackbar.text = "¡Mensaje enviado con éxito!";
-  snackbar.color = "success";
-  snackbar.show = true;
-  Object.keys(formData).forEach((key) => (formData[key] = ""));
+
+  try {
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: formData.value.name,
+        from_email: formData.value.email,
+        message: formData.value.message,
+      },
+      EMAILJS_PUBLIC_KEY,
+    );
+    toast.success("¡Mensaje enviado con éxito!");
+    form.value.reset();
+  } catch (error) {
+    console.error("Error al enviar el correo:", error);
+    toast.error("Error al enviar el mensaje");
+  }
+
   isSubmitting.value = false;
 };
+
+watch(
+  () => formData.value,
+  (newData) => {
+    isFormValid.value =
+      !!(newData.name?.trim() || "") &&
+      !!(newData.email?.trim() || "") &&
+      !!(newData.message?.trim() || "");
+  },
+  { deep: true },
+);
 </script>
 
 <style scoped>
@@ -178,19 +144,6 @@ const submitForm = async () => {
   height: 4px;
   margin-bottom: 10px;
 }
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.contact-link {
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
 .card-hover {
   transition: all 0.3s ease;
   border-radius: 12px;
@@ -201,18 +154,7 @@ const submitForm = async () => {
 }
 
 .card-hover:hover {
-  transform: translateY(-5px);
+  transform: translateY(-1px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.social-links {
-  display: flex;
-  gap: 10px;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.social-links:hover {
-  opacity: 1;
 }
 </style>
