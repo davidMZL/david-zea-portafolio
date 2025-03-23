@@ -1,6 +1,21 @@
 <template>
-  <v-app-bar app elevation="1" class="px-4 bg-grey-lighten-2" rounded="xs">
-    <v-app-bar-title class="font-weight-bold">David Zea</v-app-bar-title>
+  <v-app-bar
+    app
+    elevation="1"
+    class="px-4 bg-transparent"
+    style="
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    "
+    rounded="xs"
+  >
+    <v-app-bar-title class="font-weight-bold text-blank"
+      >David Zea</v-app-bar-title
+    >
 
     <v-spacer></v-spacer>
 
@@ -10,7 +25,7 @@
         v-for="item in navItems"
         :key="item.id"
         :variant="activeSection === item.id ? 'tonal' : 'text'"
-        :color="activeSection === item.id ? 'primary' : 'default'"
+        :color="activeSection === item.id ? 'primary' : 'blank'"
         class="mx-1"
         rounded
         @click="scrollToSection(item.id)"
@@ -38,10 +53,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 
 const drawer = ref(false);
-const activeSection = ref("");
+const activeSection = ref("home");
 
 const navItems = [
   { id: "home", title: "Inicio" },
@@ -53,29 +68,32 @@ const navItems = [
 
 const scrollToSection = (sectionId: string) => {
   drawer.value = false;
-  const element = document.getElementById(sectionId);
-  element?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document
+    .getElementById(sectionId)
+    ?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-const updateActiveSection = () => {
-  const scrollPosition = window.scrollY + 100; // Margen de detección
-
-  for (const item of navItems) {
-    const section = document.getElementById(item.id);
-    if (section && section.offsetTop <= scrollPosition) {
-      activeSection.value = item.id;
+const observer = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        activeSection.value = entry.target.id;
+        break;
+      }
     }
-  }
-};
+  },
+  { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
+);
 
 onMounted(() => {
-  window.addEventListener("scroll", updateActiveSection);
-  window.scrollTo({ top: 0, behavior: "instant" });
-  activeSection.value = "home";
+  navItems.forEach((item) => {
+    const section = document.getElementById(item.id);
+    if (section) observer.observe(section);
+  });
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", updateActiveSection);
+  observer.disconnect();
 });
 </script>
 

@@ -21,20 +21,20 @@
     <v-row class="align-center">
       <v-col
         cols="12"
-        md="4"
+        md="6"
         class="d-flex justify-center mb-8 mb-md-0 animate__animated animate__fadeInLeft"
       >
         <v-img
           :src="getImageDeveloper"
           alt="David Zea Profile"
-          max-width="600"
+          max-width="800"
           class="rounded-circle shadow-sm profile-image bg-transparent"
         ></v-img>
       </v-col>
 
       <v-col
         cols="12"
-        md="8"
+        md="6"
         class="animate__animated animate__fadeInRight about-card"
       >
         <div class="about-content">
@@ -76,26 +76,24 @@
               PROYECTOS </span
             >.
           </p>
-
-          <div class="d-flex flex-wrap gap-3">
-            <v-btn
-              color="primary"
-              variant="outlined"
-              class="mt-4"
-              @click="downloadCV"
-            >
-              <Download class="icon-left" size="20"></Download>
-              Descargar CV
-            </v-btn>
-          </div>
         </div>
       </v-col>
+    </v-row>
+    <v-row class="justify-center align-center text-center mb-4">
+      <v-btn
+        color="secondary"
+        class="animate__animated animate__fadeInUp mt-4"
+        @click="downloadCV"
+      >
+        <Download class="icon-left" size="20"></Download>
+        Descargar CV
+      </v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-const getImageDeveloper = new URL("@/assets/developer.svg", import.meta.url)
+const getImageDeveloper = new URL("@/assets/programmer.svg", import.meta.url)
   .href;
 
 const scrollToSection = (sectionId: string) => {
@@ -109,7 +107,6 @@ const scrollToSection = (sectionId: string) => {
 };
 
 const downloadCV = () => {
-  // Corrección en la ruta del archivo
   const cvUrl = "/docs/cv.pdf";
   const link = document.createElement("a");
   link.href = cvUrl;
@@ -178,9 +175,5 @@ p {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-}
-
-.gap-3 {
-  gap: 12px;
 }
 </style>

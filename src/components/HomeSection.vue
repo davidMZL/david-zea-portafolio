@@ -106,7 +106,6 @@ const getImageMouse = new URL("@/assets/gif/mouse-animation.gif", import.meta.ur
   .href;
 
 onMounted(() => {
-  // Opcional: agregar algún efecto de observación o animación
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -149,6 +148,6 @@ onMounted(() => {
 
 .v-btn:hover {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Efecto de elevación */
-  transform: translateY(-3px); /* Pequeño efecto de levantamiento */
+  transform: translateY(-5px); /* Pequeño efecto de levantamiento */
 }
 </style>

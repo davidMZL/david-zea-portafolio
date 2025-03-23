@@ -432,26 +432,30 @@ const imageDialog = ref(false);
 const selectedImage = ref("");
 
 const imagenMainAssistance = new URL(
-  "@/assets/images/assistance/assistanceMain.png",
+  "@/assets/images/assistance/assistanceMain.avif",
   import.meta.url,
 ).href;
 const imageAssistanceProject = ref([
-  new URL("@/assets/images/assistance/assistance1.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance2.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance3.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance4.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance5.png", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance1.avif", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance2.avif", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance3.avif", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance4.avif", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance5.avif", import.meta.url).href,
 ]);
 
 const imagenMainMedical = new URL(
-  "@/assets/images/medicalFile/medicalMain.png",
+  "@/assets/images/medicalFile/medicalMain.avif",
   import.meta.url,
 ).href;
 const imageMedicalProject = ref([
-  new URL("@/assets/images/medicalFile/medicalFile1.png", import.meta.url).href,
-  new URL("@/assets/images/medicalFile/medicalFile2.png", import.meta.url).href,
-  new URL("@/assets/images/medicalFile/medicalFile3.png", import.meta.url).href,
-  new URL("@/assets/images/medicalFile/medicalFile4.png", import.meta.url).href,
+  new URL("@/assets/images/medicalFile/medicalFile1.avif", import.meta.url)
+    .href,
+  new URL("@/assets/images/medicalFile/medicalFile2.avif", import.meta.url)
+    .href,
+  new URL("@/assets/images/medicalFile/medicalFile3.avif", import.meta.url)
+    .href,
+  new URL("@/assets/images/medicalFile/medicalFile4.avif", import.meta.url)
+    .href,
 ]);
 
 const projects = ref([

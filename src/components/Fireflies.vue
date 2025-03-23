@@ -30,7 +30,7 @@ const getAnimationStyle = (i: number) => {
     "--flash-delay": flashDelay,
   };
 };
-const firefliesBG = new URL("@/assets/fireflies.jpg", import.meta.url).href;
+const firefliesBG = new URL("@/assets/forest.avif", import.meta.url).href;
 </script>
 
 <style scoped lang="scss">
