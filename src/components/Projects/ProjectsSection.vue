@@ -141,84 +141,91 @@
     <v-fade-transition>
       <v-row v-if="viewMode === 'list'">
         <v-col cols="12">
-          <v-timeline align="start" side="end" line-thickness="2">
-            <v-timeline-item
-              v-for="(project, index) in projects"
-              :key="index"
-              dot-color="primary"
-              size="small"
-              :class="[
-                `animate__animated animate__fadeInLeft animate__delay-${index % 2}s`,
-              ]"
-            >
-              <template v-slot:opposite>
-                <div class="d-flex flex-column">
-                  <h3 class="text-h6 font-weight-bold mb-1 timeline-title">
-                    {{ project.title }}
-                  </h3>
-                  <div>
-                    <v-chip
-                      v-for="(tech, techIndex) in project.technologies.slice(
-                        0,
-                        2,
-                      )"
-                      :key="techIndex"
-                      class="mr-1 mb-1"
-                      size="x-small"
-                      color="primary"
-                      variant="outlined"
-                    >
-                      {{ tech }}
-                    </v-chip>
-                    <v-tooltip
-                      location="bottom"
-                      v-if="project.technologies.length > 2"
-                    >
-                      <template v-slot:activator="{ props }">
-                        <v-chip
-                          v-bind="props"
-                          size="x-small"
-                          color="grey"
-                          variant="flat"
+          <div class="tree-timeline-container">
+            <div class="tree-trunk"></div>
+            <div class="tree-branches">
+              <div
+                  v-for="(project, index) in projects"
+                  :key="index"
+                  class="branch-item"
+                  :class="[
+              'animate__animated',
+              index % 2 === 0 ? 'branch-left' : 'branch-right',
+              display.mdAndUp
+                ? index % 2 === 0 ? 'animate__fadeInLeft' : 'animate__fadeInRight'
+                : 'animate__fadeInUp',
+              `animate__delay-${index % 3}s`
+            ]"
+              >
+                <div class="branch-dot"></div>
+
+                <div class="branch-content">
+                  <div class="branch-header">
+                    <h3 class="text-h6 font-weight-bold mb-1 timeline-title text-blank">
+                      {{ project.title }}
+                    </h3>
+                    <div class="tech-chips">
+                      <v-chip
+                        v-for="(tech, techIndex) in project.technologies.slice(0, 2)"
+                        :key="techIndex"
+                        class="mr-1 mb-1"
+                        size="x-small"
+                        color="blank"
+                        variant="outlined"
+                      >
+                        {{ tech }}
+                      </v-chip>
+                      <v-tooltip
+                        location="bottom"
+                        v-if="project.technologies.length > 2"
+                      >
+                        <template v-slot:activator="{ props }">
+                          <v-chip
+                            v-bind="props"
+                            size="x-small"
+                            color="grey"
+                            variant="flat"
+                          >
+                            +{{ project.technologies.length - 2 }}
+                          </v-chip>
+                        </template>
+                        <span>
+                      {{ project.technologies.slice(2).join(', ') }}
+                    </span>
+                      </v-tooltip>
+                    </div>
+                  </div>
+
+                  <v-card class="elevation-2 timeline-card">
+                    <div class="d-flex flex-column flex-sm-row">
+                      <v-img
+                        :src="project.image"
+                        height="120"
+                        :width="display.smAndUp ? '120' : '100%'"
+                        cover
+                        class="timeline-image"
+                      />
+                      <div class="pa-3">
+                        <p class="text-body-2 mb-3">{{ project.description }}</p>
+                        <v-btn
+                          color="primary"
+                          variant="text"
+                          density="compact"
+                          @click="openProject(index)"
+                          class="text-lowercase"
                         >
-                          +{{ project.technologies.length - 2 }}
-                        </v-chip>
-                      </template>
-                      <span>{{
-                        project.technologies.slice(2).join(", ")
-                      }}</span>
-                    </v-tooltip>
-                  </div>
+                          <v-icon size="small" class="mr-1">
+                            <Play :size="18" />
+                          </v-icon>
+                          Ver detalles
+                        </v-btn>
+                      </div>
+                    </div>
+                  </v-card>
                 </div>
-              </template>
-              <v-card class="elevation-2 timeline-card">
-                <div class="d-flex">
-                  <v-img
-                    :src="project.image"
-                    height="120"
-                    width="120"
-                    cover
-                    class="timeline-image"
-                  ></v-img>
-                  <div class="pa-3">
-                    <p class="text-body-2 mb-3">{{ project.description }}</p>
-                    <v-btn
-                      color="primary"
-                      variant="text"
-                      density="compact"
-                      @click="openProject(index)"
-                      class="text-lowercase"
-                    >
-                      <v-icon size="small" class="mr-1">
-                        <Play :size="18"></Play>
-                      </v-icon>
-                      Ver detalles
-                    </v-btn>
-                  </div>
-                </div>
-              </v-card>
-            </v-timeline-item>
-          </v-timeline>
+              </div>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-fade-transition>
@@ -305,7 +312,7 @@
                     /></v-icon>
                     Tecnologías Usadas:
                   </h3>
-                  <div class="tech-chips-container">
+                  <div class="tech-chips-container blur-hover">
                     <v-chip
                       v-for="(tech, techIndex) in selectedProject.technologies"
                       :key="techIndex"
@@ -424,80 +431,15 @@ import {
   Images,
   ZoomIn,
 } from "lucide-vue-next";
+import { useDisplay } from 'vuetify';
+import {projects} from "@/components/Projects/ProjectsSection.ts";
 
 const viewMode = ref("grid");
 const dialog = ref(false);
 const selectedProjectIndex = ref(0);
 const imageDialog = ref(false);
 const selectedImage = ref("");
-
-const imagenMainAssistance = new URL(
-  "@/assets/images/assistance/assistanceMain.avif",
-  import.meta.url,
-).href;
-const imageAssistanceProject = ref([
-  new URL("@/assets/images/assistance/assistance1.avif", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance2.avif", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance3.avif", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance4.avif", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance5.avif", import.meta.url).href,
-]);
-
-const imagenMainMedical = new URL(
-  "@/assets/images/medicalFile/medicalMain.avif",
-  import.meta.url,
-).href;
-const imageMedicalProject = ref([
-  new URL("@/assets/images/medicalFile/medicalFile1.avif", import.meta.url)
-    .href,
-  new URL("@/assets/images/medicalFile/medicalFile2.avif", import.meta.url)
-    .href,
-  new URL("@/assets/images/medicalFile/medicalFile3.avif", import.meta.url)
-    .href,
-  new URL("@/assets/images/medicalFile/medicalFile4.avif", import.meta.url)
-    .href,
-]);
-
-const projects = ref([
-  {
-    title: "Assistance-SOS",
-    description: "Desarrollé la plataforma web AssistanceSOS.",
-    objetives:
-      "Monitoreo de ambulancias en tiempo real, y subasta de casos en tiempo real.",
-    resume:
-      "Assistance-SOS es una Plataforma web para la gestión de ambulancias y de subasta de casos en tiempo Real.",
-    timeBuilding: "7 meses",
-    technologies: [
-      "Vue.js 3",
-      "Typescript",
-      "Leaflet",
-      "Firebase",
-      "AWS Amplify",
-      "Node.js",
-    ],
-    image: imagenMainAssistance,
-    imageResults: imageAssistanceProject,
-  },
-  {
-    title: "MedicalFile",
-    description: "Desarrollé la plataforma web MedicalFile.",
-    objetives:
-      "Plataforma para la gestión de medicamentos y monitoreo de unidades de transporte clínico en tiempo real.",
-    resume:
-      "MedicalFile es una Plataforma web para la gestión de ambulancias, medicamentos, y de historial médico en tiempo real.",
-    timeBuilding: "6 meses",
-    technologies: [
-      "Vue.js 3",
-      "Typescript",
-      "Google Maps",
-      "Firebase",
-      "AWS Amplify",
-      "Node.js",
-    ],
-    image: imagenMainMedical,
-    imageResults: imageMedicalProject,
-  },
-]);
+const display = useDisplay();
 
 const selectedProject = computed(() => {
   return projects.value[selectedProjectIndex.value];
@@ -514,4 +456,4 @@ function openImage(image: string) {
 }
 </script>
 
-<style scoped src="src/assets/styles/projectsSection.css" />
+<style src="@/assets/styles/projectsSection.css"/>

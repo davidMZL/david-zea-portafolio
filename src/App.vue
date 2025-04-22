@@ -41,7 +41,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import NavBar from "./components/NavBar.vue";
 import HomeSection from "./components/HomeSection.vue";
 import AboutSection from "./components/AboutSection.vue";
-import ProjectsSection from "./components/ProjectsSection.vue";
+import ProjectsSection from "./components/Projects/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
 import ContactSection from "./components/ContactSection.vue";
 import Fireflies from "./components/Fireflies.vue";

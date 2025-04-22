@@ -18,7 +18,6 @@
 }
 
 .project-card.on-hover {
-  transform: translateY(-12px);
   box-shadow: 0 16px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -171,4 +170,151 @@
 .full-image {
   border-radius: 8px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+.tree-timeline-container {
+  position: relative;
+  padding: 20px 0;
+}
+
+.tree-trunk {
+  position: absolute;
+  width: 8px;
+  background-color: var(--v-primary-base, #1976d2);
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.tree-branches {
+  position: relative;
+  z-index: 2;
+}
+
+.branch-item {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+
+.branch-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--v-primary-base, #1976d2);
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.branch-left {
+  justify-content: flex-end;
+}
+
+.branch-left .branch-connector {
+  right: 50%;
+}
+
+.branch-left .branch-content {
+  margin-right: 60px;
+  width: calc(50% - 60px);
+}
+
+.branch-right {
+  justify-content: flex-start;
+}
+
+.branch-right .branch-connector {
+  left: 50%;
+}
+
+.branch-right .branch-content {
+  margin-left: 60px;
+  width: calc(50% - 60px);
+}
+
+.branch-content {
+  position: relative;
+  z-index: 2;
+}
+
+.branch-header {
+  margin-bottom: 20px;
+}
+
+.timeline-card {
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.timeline-image {
+  object-fit: cover;
+}
+
+/* Estilos responsivos para dispositivos móviles */
+@media (max-width: 959px) {
+  .tree-trunk {
+    left: 20px;
+    transform: none;
+  }
+
+  .branch-item {
+    justify-content: flex-start;
+  }
+
+  .branch-dot {
+    left: 20px;
+    transform: none;
+  }
+
+  .branch-connector {
+    width: 40px;
+    left: 28px;
+  }
+
+  .branch-left .branch-content,
+  .branch-right .branch-content {
+    margin-left: 60px;
+    margin-right: 0;
+    width: calc(100% - 80px);
+  }
+
+  .branch-left .branch-connector,
+  .branch-right .branch-connector {
+    left: 28px;
+    right: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .branch-left .branch-content,
+  .branch-right .branch-content {
+    width: calc(100% - 60px);
+  }
+
+  .tech-chips {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.blur-hover {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }

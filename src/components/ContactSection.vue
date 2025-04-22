@@ -64,7 +64,7 @@
                   @click="submitForm"
                   rounded
                 >
-                  Enviar Mensaje
+                  Enviar
                 </v-btn>
               </v-col>
             </v-row>

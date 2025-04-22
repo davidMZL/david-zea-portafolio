@@ -133,12 +133,15 @@ const frontendSkills = [
 ];
 
 const toolsSkills = [
+  { name: "AWS Amplify", icon: logos.aws },
+  { name: "AWS Cognito", icon: logos.cognito},
   { name: "Git", icon: logos.git },
   { name: "GitHub", icon: logos.github },
   { name: "GitLab", icon: logos.gitlab },
-  { name: "Terminal", icon: logos.terminal },
+  { name: "pnpm", icon: logos.pnpm},
   { name: "NPM", icon: logos.npm },
-  { name: "AWS Amplify", icon: logos.aws },
+  { name: "NodeJs", icon: logos.nodejs },
+  { name: "Terminal", icon: logos.terminal },
   { name: "Firebase", icon: logos.firebase },
   { name: "Vite", icon: logos.vite },
 ];
