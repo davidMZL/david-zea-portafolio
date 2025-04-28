@@ -35,35 +35,9 @@
       </v-col>
     </v-row>
 
-    <!-- Vista en modo Grid/Lista con toggle -->
-    <v-row class="mb-6">
-      <v-col cols="12" class="d-flex justify-end">
-        <v-btn-toggle
-          v-model="viewMode"
-          color="primary"
-          mandatory
-          rounded="pill"
-          density="comfortable"
-        >
-          <v-btn value="grid">
-            <template v-slot:prepend>
-              <Grid :size="18" />
-            </template>
-            Grid
-          </v-btn>
-          <v-btn value="list">
-            <template v-slot:prepend>
-              <ListOrdered :size="18" />
-            </template>
-            Lista
-          </v-btn>
-        </v-btn-toggle>
-      </v-col>
-    </v-row>
-
     <!-- Vista Grid con transición -->
     <v-fade-transition>
-      <v-row v-if="viewMode === 'grid'">
+      <v-row>
         <v-col
           v-for="(project, index) in projects"
           :key="index"
@@ -126,7 +100,7 @@
                   class="project-button"
                 >
                   <v-icon class="mr-1">
-                    <Search :size="18" />
+                    <img :src="iconsSvg.search" alt="Search" width="24" height="24" />
                   </v-icon>
                   Ver detalles
                 </v-btn>
@@ -136,101 +110,6 @@
         </v-col>
       </v-row>
     </v-fade-transition>
-
-    <!-- Vista Lista con transición -->
-    <v-fade-transition>
-      <v-row v-if="viewMode === 'list'">
-        <v-col cols="12">
-          <div class="tree-timeline-container">
-            <div class="tree-trunk"></div>
-            <div class="tree-branches">
-              <div
-                  v-for="(project, index) in projects"
-                  :key="index"
-                  class="branch-item"
-                  :class="[
-              'animate__animated',
-              index % 2 === 0 ? 'branch-left' : 'branch-right',
-              display.mdAndUp
-                ? index % 2 === 0 ? 'animate__fadeInLeft' : 'animate__fadeInRight'
-                : 'animate__fadeInUp',
-              `animate__delay-${index % 3}s`
-            ]"
-              >
-                <div class="branch-dot"></div>
-
-                <div class="branch-content">
-                  <div class="branch-header">
-                    <h3 class="text-h6 font-weight-bold mb-1 timeline-title text-blank">
-                      {{ project.title }}
-                    </h3>
-                    <div class="tech-chips">
-                      <v-chip
-                        v-for="(tech, techIndex) in project.technologies.slice(0, 2)"
-                        :key="techIndex"
-                        class="mr-1 mb-1"
-                        size="x-small"
-                        color="blank"
-                        variant="outlined"
-                      >
-                        {{ tech }}
-                      </v-chip>
-                      <v-tooltip
-                        location="bottom"
-                        v-if="project.technologies.length > 2"
-                      >
-                        <template v-slot:activator="{ props }">
-                          <v-chip
-                            v-bind="props"
-                            size="x-small"
-                            color="grey"
-                            variant="flat"
-                          >
-                            +{{ project.technologies.length - 2 }}
-                          </v-chip>
-                        </template>
-                        <span>
-                      {{ project.technologies.slice(2).join(', ') }}
-                    </span>
-                      </v-tooltip>
-                    </div>
-                  </div>
-
-                  <v-card class="elevation-2 timeline-card">
-                    <div class="d-flex flex-column flex-sm-row">
-                      <v-img
-                        :src="project.image"
-                        height="120"
-                        :width="display.smAndUp ? '120' : '100%'"
-                        cover
-                        class="timeline-image"
-                      />
-                      <div class="pa-3">
-                        <p class="text-body-2 mb-3">{{ project.description }}</p>
-                        <v-btn
-                          color="primary"
-                          variant="text"
-                          density="compact"
-                          @click="openProject(index)"
-                          class="text-lowercase"
-                        >
-                          <v-icon size="small" class="mr-1">
-                            <Play :size="18" />
-                          </v-icon>
-                          Ver detalles
-                        </v-btn>
-                      </div>
-                    </div>
-                  </v-card>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-    </v-fade-transition>
-
-    <!-- Diálogo de detalles del proyecto mejorado -->
     <v-dialog
       v-model="dialog"
       max-width="1300"
@@ -260,7 +139,7 @@
                   class="close-button"
                   color="blank"
                 >
-                  <X :size="32" />
+                  <img :src="iconsSvg.cancel" alt="Cancel" width="32" height="32" />
                 </v-btn>
               </v-col>
             </v-row>
@@ -278,7 +157,7 @@
                         class="text-h6 font-weight-bold mb-3 primary--text detail-heading"
                       >
                         <v-icon color="primary" class="mr-2">
-                          <Info :size="22" />
+                          <img :src="iconsSvg.info" alt="info" width="34" height="34" />
                         </v-icon>
                         Resumen
                       </h3>
@@ -292,7 +171,7 @@
                         class="text-h6 font-weight-bold mb-3 primary--text detail-heading"
                       >
                         <v-icon color="primary" class="mr-2">
-                          <CalendarClock :size="22" />
+                          <img :src="iconsSvg.calendar" alt="Calendar" width="22" height="22" />
                         </v-icon>
                         Tiempo de Elaboración
                       </h3>
@@ -307,9 +186,9 @@
                   <h3
                     class="text-h6 font-weight-bold mb-3 primary--text mt-6 detail-heading"
                   >
-                    <v-icon color="primary" class="mr-2"
-                      ><Code :size="22"
-                    /></v-icon>
+                    <v-icon color="primary" class="mr-2">
+                      <img :src="iconsSvg.code" alt="Code" width="22" height="22" />
+                    </v-icon>
                     Tecnologías Usadas:
                   </h3>
                   <div class="tech-chips-container blur-hover">
@@ -333,7 +212,7 @@
                   class="text-h6 font-weight-bold mb-4 primary--text detail-heading"
                 >
                   <v-icon color="primary" class="mr-2">
-                    <Images :size="22" />
+                    <img :src="iconsSvg.images" alt="Images" width="22" height="22" />
                   </v-icon>
                   Imágenes del Proyecto:
                 </h3>
@@ -370,7 +249,9 @@
                                 color="white"
                                 size="large"
                               >
-                                <v-icon><ZoomIn :size="22" /></v-icon>
+                                <v-icon>
+                                  <img :src="iconsSvg.zoomIn" alt="ZoomIn" width="22" height="22" />
+                                </v-icon>
                               </v-btn>
                             </div>
                           </v-img>
@@ -403,7 +284,7 @@
             @click="imageDialog = false"
             class="close-image-button"
           >
-            <X :size="24" />
+            <img :src="iconsSvg.cancel" alt="cancel" width="24" height="24" />
           </v-btn>
         </v-card-actions>
         <v-img
@@ -419,27 +300,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import {
-  Grid,
-  ListOrdered,
-  X,
-  Search,
-  Play,
-  Info,
-  CalendarClock,
-  Code,
-  Images,
-  ZoomIn,
-} from "lucide-vue-next";
-import { useDisplay } from 'vuetify';
-import {projects} from "@/components/Projects/ProjectsSection.ts";
-
-const viewMode = ref("grid");
+import { projects } from "@/components/Projects/ProjectsSection.ts";
+import { iconsSvg } from "@/common/resources.ts";
 const dialog = ref(false);
 const selectedProjectIndex = ref(0);
 const imageDialog = ref(false);
 const selectedImage = ref("");
-const display = useDisplay();
 
 const selectedProject = computed(() => {
   return projects.value[selectedProjectIndex.value];

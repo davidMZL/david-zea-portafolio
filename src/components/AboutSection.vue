@@ -82,10 +82,11 @@
     <v-row class="justify-center align-center text-center mb-4">
       <v-btn
         color="secondary"
-        class="animate__animated animate__fadeInUp mt-4"
+        class="mt-4 text-none"
         @click="downloadCV"
+        rounded
       >
-        <Download class="icon-left" size="20"></Download>
+        <img :src="iconsSvg.download" alt="LinkedIn" width="24" height="24" />
         Descargar CV
       </v-btn>
     </v-row>
@@ -93,6 +94,8 @@
 </template>
 
 <script setup lang="ts">
+import {iconsSvg} from "@/common/resources.ts";
+
 const getImageDeveloper = new URL("@/assets/programmer.svg", import.meta.url)
   .href;
 
@@ -118,6 +121,15 @@ const downloadCV = () => {
 </script>
 
 <style scoped>
+.v-btn {
+  transition:
+    box-shadow 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
+}
+.v-btn:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
 .about-card {
   transition: all 0.3s ease;
   border-radius: 12px;
@@ -128,8 +140,9 @@ const downloadCV = () => {
 }
 
 .about-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(var(--v-theme-primary), 0.2) !important;
+  border-color: rgba(var(--v-theme-primary), 0.3);
 }
 
 p {

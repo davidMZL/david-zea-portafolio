@@ -14,7 +14,7 @@
     <v-row>
       <v-col cols="12" md="12">
         <v-card class="pa-8 elevation-3 card-hover">
-          <h3 class="text-h5 font-weight-bold mb-6 text-secondary">
+          <h3 class="text-h5 font-weight-bold mb-6 text-blank">
             Envíame un Mensaje
           </h3>
 

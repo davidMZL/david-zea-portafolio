@@ -4,7 +4,7 @@
 
     <NavBar :active-section="activeSection" />
 
-    <v-main>
+    <v-main max-width="1300px" class="mx-auto">
       <section id="home" ref="homeSection" class="section">
         <HomeSection />
       </section>
@@ -92,7 +92,7 @@ onUnmounted(() => {
 /* Estilos para las secciones */
 .section {
   min-height: 100vh;
-  padding: 80px 20px 20px;
+  padding: 10px 10px;
   scroll-margin-top: 64px;
   display: flex;
   align-items: center;

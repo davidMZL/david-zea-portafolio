@@ -25,7 +25,7 @@
         v-for="item in navItems"
         :key="item.id"
         :variant="activeSection === item.id ? 'tonal' : 'text'"
-        :color="activeSection === item.id ? 'primary' : 'blank'"
+        :color="activeSection === item.id ? 'secondary' : 'blank'"
         class="mx-1"
         rounded
         @click="scrollToSection(item.id)"

@@ -8,7 +8,6 @@ import { vuetify } from "@/plugins/vuetify";
 
 // Animate.css
 import "animate.css";
-import { iconsLucide } from "@/plugins/lucide-icons/icons.ts";
 
 //toasts
 import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
@@ -18,10 +17,6 @@ const options: ToastContainerOptions = {
 };
 
 const app = createApp(App);
-
-Object.entries(iconsLucide).forEach(([name, component]) => {
-  app.component(name, component);
-});
 
 app.use(createPinia());
 app.use(router);

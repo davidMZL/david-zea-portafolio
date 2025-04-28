@@ -30,7 +30,7 @@ const getAnimationStyle = (i: number) => {
     "--flash-delay": flashDelay,
   };
 };
-const firefliesBG = new URL("@/assets/forest.avif", import.meta.url).href;
+const firefliesBG = new URL("@/assets/forest.jpg", import.meta.url).href;
 </script>
 
 <style scoped lang="scss">
@@ -94,7 +94,7 @@ const firefliesBG = new URL("@/assets/forest.avif", import.meta.url).href;
   &::after {
     background: white;
     opacity: 0;
-    box-shadow: 0 0 0vw 0vw yellow;
+    box-shadow: 0 0 0 0 yellow;
     animation:
       drift ease alternate infinite,
       flash ease infinite;
@@ -118,7 +118,7 @@ const firefliesBG = new URL("@/assets/forest.avif", import.meta.url).href;
   30%,
   100% {
     opacity: 0;
-    box-shadow: 0 0 0vw 0vw yellow;
+    box-shadow: 0 0 0 0 yellow;
   }
   5% {
     opacity: 1;
