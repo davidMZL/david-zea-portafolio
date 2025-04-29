@@ -4,28 +4,28 @@
       <v-col
         cols="12"
         md="6"
-        class="d-flex justify-center animate__animated animate__fadeInLeft text-blank"
+        class="d-flex justify-center text-blank"
       >
         <div class="position-relative">
           <h1 class="text-h2 font-weight-bold mb-2">David Zea</h1>
           <h2 class="text-h4 mb-6 text-grey300">Desarrollador Front-End</h2>
-          <div class="mt-8 d-flex flex-wrap gap-4">
+          <div class="mt-8 d-flex flex-wrap justify-center">
             <v-btn
               color="primary"
               size="large"
               elevation="2"
-              class="text-none px-6 mr-4"
+              class="text-none mt-3"
               @click="scrollToSection('projects')"
               rounded
             >
               <img :src="iconsSvg.briefcase" alt="Projects" class="icon-left" />
               Ver Proyectos
             </v-btn>
-            <VSpacer></VSpacer>
+            <span class="mx-2"></span>
             <v-btn
-              color="primary"
+              variant="outlined"
               size="large"
-              class="text-none px-6 ml-4"
+              class="text-none mt-3"
               @click="scrollToSection('contact')"
               rounded
             >
@@ -74,7 +74,7 @@
       <v-col
         cols="12"
         md="6"
-        class="d-flex justify-center animate__animated animate__fadeInRight"
+        class="d-flex justify-center"
       >
         <v-img
           :src="gifImages.mainGif"
@@ -85,7 +85,7 @@
       </v-col>
     </v-row>
 
-    <v-row align="center" justify="center" class="animate__animated animate__fadeInUp">
+    <v-row align="center" justify="center">
       <v-img
         :src="gifImages.mouseGif"
         alt="mouse"

@@ -6,9 +6,6 @@ import router from "./router";
 // Vuetify
 import { vuetify } from "@/plugins/vuetify";
 
-// Animate.css
-import "animate.css";
-
 //toasts
 import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";

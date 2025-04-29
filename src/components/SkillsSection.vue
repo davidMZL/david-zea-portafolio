@@ -3,13 +3,13 @@
     <v-row>
       <v-col cols="12" class="text-center mb-8 skill-card text-blank">
         <h2
-          class="text-h3 font-weight-bold mb-2 animate__animated animate__fadeInDown"
+          class="text-h3 font-weight-bold mb-2"
         >
           Habilidades
         </h2>
-        <div class="divider animate__animated animate__fadeIn"></div>
+        <div class="divider"></div>
         <p
-          class="mt-4 text-body-1 mx-auto animate__animated animate__fadeInUp"
+          class="mt-4 text-body-1 mx-auto"
           style="max-width: 700px"
         >
           Estas son las tecnologías y herramientas con las que trabajo
@@ -21,7 +21,7 @@
     <!-- FRONTEND SECTION -->
     <v-row class="mb-8">
       <v-col cols="12">
-        <div class="category-header animate__animated animate__fadeIn">
+        <div class="category-header">
           <h3 class="text-h5 font-weight-bold text-blank">FRONTEND</h3>
           <div class="category-divider"></div>
         </div>
@@ -41,7 +41,7 @@
         <v-hover v-slot="{ isHovering, props }">
           <v-card
             v-bind="props"
-            class="skill-card animate__animated animate__zoomIn"
+            class="skill-card"
             :class="{ 'on-hover': isHovering }"
             height="100%"
             max-width="160"
@@ -65,7 +65,7 @@
     <!-- TOOLS SECTION -->
     <v-row class="mt-4 mb-4">
       <v-col cols="12">
-        <div class="category-header animate__animated animate__fadeIn">
+        <div class="category-header">
           <h3 class="text-h5 font-weight-bold text-blank">HERRAMIENTAS</h3>
           <div class="category-divider"></div>
         </div>
@@ -85,7 +85,7 @@
         <v-hover v-slot="{ isHovering, props }">
           <v-card
             v-bind="props"
-            class="skill-card animate__animated animate__zoomIn"
+            class="skill-card"
             :class="{ 'on-hover': isHovering }"
             height="100%"
             max-width="160"

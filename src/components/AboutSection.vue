@@ -22,7 +22,7 @@
       <v-col
         cols="12"
         md="6"
-        class="d-flex justify-center mb-8 mb-md-0 animate__animated animate__fadeInLeft"
+        class="d-flex justify-center mb-8 mb-md-0"
       >
         <v-img
           :src="getImageDeveloper"
@@ -35,7 +35,6 @@
       <v-col
         cols="12"
         md="6"
-        class="animate__animated animate__fadeInRight about-card"
       >
         <div class="about-content">
           <p class="text-h6 mb-6 font-weight-medium">

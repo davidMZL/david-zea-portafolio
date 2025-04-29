@@ -4,38 +4,256 @@
       :src="firefliesBG"
       class="background-image"
       alt="Fireflies background"
+      loading="eager"
     />
-    <div class="fireflies-overlay">
-      <div
-        v-for="i in quantity"
-        :key="i"
-        class="firefly"
-        :class="`firefly-${i}`"
-        :style="getAnimationStyle(i)"
-      ></div>
-    </div>
+    <canvas
+      ref="fireflyCanvas"
+      class="fireflies-canvas"
+      :width="canvasWidth"
+      :height="canvasHeight"
+    ></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-const quantity = 20;
-const getAnimationStyle = (i: number) => {
-  const rotationSpeed = Math.floor(Math.random() * 10) + 8 + "s";
-  const flashDuration = Math.floor(Math.random() * 6000) + 5000 + "ms";
-  const flashDelay = Math.floor(Math.random() * 8000) + 500 + "ms";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-  return {
-    "--rotation-speed": rotationSpeed,
-    "--flash-duration": flashDuration,
-    "--flash-delay": flashDelay,
-  };
+// Configuración
+const MAX_FIREFLIES = 20; // Reducido a 20 para mantener el efecto sutil
+const GLOW_RADIUS = 30; // Radio del resplandor
+
+// Referencias y estado
+const fireflyCanvas = ref<HTMLCanvasElement | null>(null);
+const canvasWidth = ref(0);
+const canvasHeight = ref(0);
+const animationFrameId = ref<number | null>(null);
+const isPageVisible = ref(true);
+
+// Imagen de fondo mediante importación estática
+const firefliesBG = new URL("@/assets/forest.webp", import.meta.url).href;
+
+// Clase para representar una luciérnaga
+class Firefly {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  brightness: number;
+  blinkDuration: number;
+  blinkElapsed: number;
+  glowRadius: number;
+  alpha: number;
+  canvasWidth: number;
+  canvasHeight: number;
+
+  constructor(width: number, height: number) {
+    this.canvasWidth = width;
+    this.canvasHeight = height;
+
+    this.x = Math.random() * width;
+    this.y = Math.random() * height;
+
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 20 + 10; // px/second
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+
+    this.size = Math.random() * 1.5 + 0.5;
+    this.brightness = 0;
+    this.blinkDuration = Math.random() * 2000 + 1000; // 1-3 segundos
+    this.blinkElapsed = Math.random() * this.blinkDuration;
+    this.glowRadius = (GLOW_RADIUS * 0.6) * (Math.random() * 0.5 + 0.5);
+    this.alpha = 1;
+  }
+
+  update(deltaTime: number) {
+    const deltaSeconds = deltaTime / 1000;
+
+    // Actualizar posición
+    this.x += this.vx * deltaSeconds;
+    this.y += this.vy * deltaSeconds;
+
+    // Ligero cambio de dirección cada frame
+    const curveStrength = 0.1;
+    const randomAngle = (Math.random() - 0.5) * curveStrength;
+    const cosA = Math.cos(randomAngle);
+    const sinA = Math.sin(randomAngle);
+
+    const newVx = this.vx * cosA - this.vy * sinA;
+    const newVy = this.vx * sinA + this.vy * cosA;
+    this.vx = newVx;
+    this.vy = newVy;
+
+    // Control de bordes
+    if (this.x < 0 || this.x > this.canvasWidth) {
+      this.vx *= -1;
+      this.x = Math.max(0, Math.min(this.canvasWidth, this.x));
+    }
+    if (this.y < 0 || this.y > this.canvasHeight) {
+      this.vy *= -1;
+      this.y = Math.max(0, Math.min(this.canvasHeight, this.y));
+    }
+
+    // Actualizar ciclo de parpadeo
+    this.blinkElapsed += deltaTime;
+    if (this.blinkElapsed > this.blinkDuration) {
+      this.blinkElapsed -= this.blinkDuration;
+      this.blinkDuration = Math.random() * 2000 + 1000; // nuevo ciclo aleatorio
+    }
+
+    const progress = this.blinkElapsed / this.blinkDuration;
+    this.brightness = Math.sin(progress * Math.PI) ** 2; // parpadeo más natural
+
+    return true;
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    if (this.brightness < 0.02) return;
+
+    const glow = ctx.createRadialGradient(
+        this.x, this.y, 0,
+        this.x, this.y, this.glowRadius * this.brightness
+    );
+
+    glow.addColorStop(0, `rgba(255, 255, 150, ${this.brightness * 0.5})`);
+    glow.addColorStop(0.3, `rgba(230, 255, 100, ${this.brightness * 0.2})`);
+    glow.addColorStop(1, 'rgba(200, 255, 0, 0)');
+
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.glowRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = `rgba(255, 255, 200, ${this.brightness * 0.8})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// Variables para la animación
+let fireflies: Firefly[] = [];
+let lastTimestamp = 0;
+
+// Ajustar el tamaño del canvas
+const updateCanvasSize = () => {
+  if (!fireflyCanvas.value) return;
+
+  const container = fireflyCanvas.value.parentElement;
+  if (!container) return;
+
+  const rect = container.getBoundingClientRect();
+  canvasWidth.value = rect.width;
+  canvasHeight.value = rect.height;
+
+  // Actualiza el tamaño del canvas con la resolución correcta para pantallas de alta densidad
+  fireflyCanvas.value.width = rect.width * window.devicePixelRatio;
+  fireflyCanvas.value.height = rect.height * window.devicePixelRatio;
+
+  const ctx = fireflyCanvas.value.getContext('2d');
+  if (!ctx) return;
+
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 };
-const firefliesBG = new URL("@/assets/forest.jpg", import.meta.url).href;
+
+// Inicializar las luciérnagas
+const initializeFireflies = () => {
+  if (!fireflyCanvas.value) return;
+
+  // Determinar el número adecuado de luciérnagas según características del dispositivo
+  const isLowPower = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fireflyCount = isLowPower ? 15 : MAX_FIREFLIES;
+
+  // Crear luciérnagas
+  fireflies = [];
+  for (let i = 0; i < fireflyCount; i++) {
+    fireflies.push(new Firefly(canvasWidth.value, canvasHeight.value));
+  }
+};
+
+// Bucle de animación
+const animate = (timestamp: number) => {
+  if (!isPageVisible.value || !fireflyCanvas.value) {
+    return;
+  }
+
+  const deltaTime = timestamp - lastTimestamp || 0;
+  lastTimestamp = timestamp;
+
+  const ctx = fireflyCanvas.value.getContext('2d');
+  if (!ctx) return;
+
+  // Limpiar canvas
+  ctx.clearRect(0, 0, canvasWidth.value, canvasHeight.value);
+
+  // Actualizar y dibujar luciérnagas
+  for (let i = fireflies.length - 1; i >= 0; i--) {
+    const isAlive = fireflies[i].update(deltaTime);
+
+    if (!isAlive) {
+      // Reemplazar con una nueva luciérnaga
+      fireflies.splice(i, 1);
+      fireflies.push(new Firefly(canvasWidth.value, canvasHeight.value));
+    } else {
+      // Dibujar la luciérnaga existente
+      fireflies[i].draw(ctx);
+    }
+  }
+
+  // Continuar la animación
+  animationFrameId.value = requestAnimationFrame(animate);
+};
+
+// Manejo del ciclo de vida del componente
+onMounted(() => {
+  // Configuración inicial
+  updateCanvasSize();
+  initializeFireflies();
+
+  // Comenzar la animación
+  lastTimestamp = performance.now();
+  animationFrameId.value = requestAnimationFrame(animate);
+
+  // Eventos del navegador
+  window.addEventListener('resize', handleResize);
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+});
+
+onBeforeUnmount(() => {
+  // Detener la animación y limpiar eventos
+  if (animationFrameId.value !== null) {
+    cancelAnimationFrame(animationFrameId.value);
+  }
+  window.removeEventListener('resize', handleResize);
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+});
+
+// Manejadores de eventos
+const handleResize = () => {
+  updateCanvasSize();
+  // Opcional: reinicializar luciérnagas después de un cambio significativo de tamaño
+  if (Math.abs(window.innerWidth - canvasWidth.value) > 100) {
+    initializeFireflies();
+  }
+};
+
+const handleVisibilityChange = () => {
+  isPageVisible.value = document.visibilityState === 'visible';
+
+  if (isPageVisible.value && animationFrameId.value === null) {
+    // Reanudar la animación
+    lastTimestamp = performance.now();
+    animationFrameId.value = requestAnimationFrame(animate);
+  } else if (!isPageVisible.value && animationFrameId.value !== null) {
+    // Pausar la animación
+    cancelAnimationFrame(animationFrameId.value);
+    animationFrameId.value = null;
+  }
+};
 </script>
 
-<style scoped lang="scss">
-@use "sass:math";
-
+<style scoped>
 .fireflies-container {
   position: absolute;
   top: 0;
@@ -55,7 +273,7 @@ const firefliesBG = new URL("@/assets/forest.jpg", import.meta.url).href;
   z-index: 0;
 }
 
-.fireflies-overlay {
+.fireflies-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -63,91 +281,5 @@ const firefliesBG = new URL("@/assets/forest.jpg", import.meta.url).href;
   height: 100%;
   pointer-events: none;
   z-index: 1;
-}
-
-.firefly {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0.4vw;
-  height: 0.4vw;
-  margin: -0.2vw 0 0 9.8vw;
-  pointer-events: none;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    transform-origin: -10vw;
-  }
-
-  &::before {
-    background: black;
-    opacity: 0.4;
-    animation: drift ease alternate infinite;
-    animation-duration: var(--rotation-speed);
-  }
-
-  &::after {
-    background: white;
-    opacity: 0;
-    box-shadow: 0 0 0 0 yellow;
-    animation:
-      drift ease alternate infinite,
-      flash ease infinite;
-    animation-duration: var(--rotation-speed), var(--flash-duration);
-    animation-delay: 0ms, var(--flash-delay);
-  }
-}
-
-// Animaciones generales
-@keyframes drift {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes flash {
-  0%,
-  30%,
-  100% {
-    opacity: 0;
-    box-shadow: 0 0 0 0 yellow;
-  }
-  5% {
-    opacity: 1;
-    box-shadow: 0 0 2vw 0.4vw yellow;
-  }
-}
-
-// Genera animaciones individuales para cada luciérnaga
-
-@for $i from 1 through 20 {
-  $steps: math.random(12) +
-    16; // Genera un número aleatorio de pasos en tiempo de compilación
-
-  .firefly-#{$i} {
-    animation: move#{$i} ease 200s alternate infinite;
-  }
-
-  @keyframes move#{$i} {
-    @for $step from 0 through $steps {
-      #{math.percentage(math.div($step, $steps))} {
-        $random_x: math.random(100) - 50;
-        $random_y: math.random(100) - 50;
-        $random_scale: math.div(math.random(75), 100) + 0.25;
-
-        transform: translateX(#{$random_x}vw)
-          translateY(#{$random_y}vh)
-          scale(#{$random_scale});
-      }
-    }
-  }
 }
 </style>

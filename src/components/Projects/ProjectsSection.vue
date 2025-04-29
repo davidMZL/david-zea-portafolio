@@ -51,10 +51,6 @@
               v-bind="props"
               class="mx-auto project-card h-100"
               :elevation="isHovering ? 8 : 3"
-              :class="[
-                `animate__animated animate__fadeIn animate__delay-${index % 3}s`,
-                { 'on-hover': isHovering },
-              ]"
             >
               <v-img
                 :src="project.image"
