@@ -119,14 +119,14 @@ const logos = Object.fromEntries(
 );
 
 const frontendSkills = [
+  { name: "Vue.js", icon: logos.vuejs },
+  { name: "TypeScript", icon: logos.typescript },
+  { name: "Pinia Store", icon: logos.piniaStore },
+  { name: "JavaScript", icon: logos.javascript },
   { name: "HTML5", icon: logos.html5 },
   { name: "CSS3", icon: logos.css3 },
-  { name: "JavaScript", icon: logos.javascript },
-  { name: "TypeScript", icon: logos.typescript },
-  { name: "Vue.js", icon: logos.vuejs },
   { name: "Google Maps API", icon: logos.googleMaps },
   { name: "Leaflet", icon: logos.leaflet },
-  { name: "Pinia Store", icon: logos.piniaStore },
   { name: "Vuex", icon: logos.vuex },
   { name: "Vuetify", icon: logos.vuetify },
   { name: "Tailwind CSS", icon: logos.tailwind },
@@ -134,16 +134,16 @@ const frontendSkills = [
 
 const toolsSkills = [
   { name: "AWS Amplify", icon: logos.aws },
-  { name: "AWS Cognito", icon: logos.cognito},
+  { name: "AWS Cognito", icon: logos.cognito },
   { name: "Git", icon: logos.git },
   { name: "GitHub", icon: logos.github },
   { name: "GitLab", icon: logos.gitlab },
   { name: "pnpm", icon: logos.pnpm},
-  { name: "NPM", icon: logos.npm },
   { name: "NodeJs", icon: logos.nodejs },
-  { name: "Terminal", icon: logos.terminal },
+  { name: "WSL", icon: logos.terminalWSL },
   { name: "Firebase", icon: logos.firebase },
   { name: "Vite", icon: logos.vite },
+  { name: "Linux", icon: logos.linux },
 ];
 
 const skillsMap: any = {

@@ -85,7 +85,7 @@
         @click="downloadCV"
         rounded
       >
-        <img :src="iconsSvg.download" alt="LinkedIn" width="24" height="24" />
+        <img :src="iconsSvg.downloadCloud" alt="LinkedIn" width="24" height="24" />
         Descargar CV
       </v-btn>
     </v-row>

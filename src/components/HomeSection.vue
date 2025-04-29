@@ -1,14 +1,15 @@
 <template>
   <v-container fluid>
-    <v-row align="center" class="min-vh">
+    <v-row align="center" justify="center" class="min-vh">
       <v-col
         cols="12"
-        md="6"
-        class="d-flex justify-center text-blank"
+        md="8"
+        class="d-flex flex-column align-center text-center text-blank fade-in"
       >
-        <div class="position-relative">
+        <div>
           <h1 class="text-h2 font-weight-bold mb-2">David Zea</h1>
           <h2 class="text-h4 mb-6 text-grey300">Desarrollador Front-End</h2>
+
           <div class="mt-8 d-flex flex-wrap justify-center">
             <v-btn
               color="primary"
@@ -34,7 +35,7 @@
             </v-btn>
           </div>
 
-          <div class="social-links mt-8 d-none d-md-flex">
+          <div class="social-links mt-8 d-flex justify-center">
             <a
               class="text-blank"
               href="https://github.com/davidMZL"
@@ -47,7 +48,7 @@
                 class="mr-3 social-icon-btn"
                 style="border-radius: 50%;"
               >
-                <img :src="iconsSvg.github" alt="Github" width="34" height="34" />
+                <img :src="iconsSvg.githubColor" alt="Github" width="34" height="34" />
               </v-btn>
             </a>
 
@@ -66,22 +67,8 @@
                 <img :src="iconsSvg.linkedin" alt="LinkedIn" width="34" height="34" />
               </v-btn>
             </a>
-
           </div>
         </div>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="6"
-        class="d-flex justify-center"
-      >
-        <v-img
-          :src="gifImages.mainGif"
-          alt="David Zea"
-          max-width="600"
-          class="rounded-circle shadow-sm"
-        />
       </v-col>
     </v-row>
 
@@ -125,17 +112,8 @@ const scrollToSection = (sectionId: string): void => {
   opacity: 1;
 }
 
-.v-btn {
-  transition:
-    box-shadow 0.3s ease-in-out,
-    transform 0.2s ease-in-out;
-}
-.v-btn:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
-}
 .social-icon-btn {
-  background-color: #f5f5f5; /* gris claro */
+  background-color: #f5f5f5;
   border-radius: 50%;
   width: 48px;
   height: 48px;
@@ -144,4 +122,19 @@ const scrollToSection = (sectionId: string): void => {
   justify-content: center;
 }
 
+/* 🎯 Animación */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out;
+}
 </style>

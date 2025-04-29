@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Fireflies class="fireflies-wrapper" />
+    <ShootingStars class="bg-wrapper"></ShootingStars>
 
     <NavBar :active-section="activeSection" />
 
@@ -44,7 +44,7 @@ import AboutSection from "./components/AboutSection.vue";
 import ProjectsSection from "./components/Projects/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
 import ContactSection from "./components/ContactSection.vue";
-import Fireflies from "./components/Fireflies.vue";
+import ShootingStars from "@/components/ShootingStars.vue";
 const homeSection = ref<HTMLElement | null>(null);
 const aboutSection = ref<HTMLElement | null>(null);
 const projectsSection = ref<HTMLElement | null>(null);
@@ -100,8 +100,7 @@ onUnmounted(() => {
   position: relative; /* Para que se posicione correctamente sobre el fondo */
 }
 
-/* Estilos para el wrapper de Fireflies */
-.fireflies-wrapper {
+.bg-wrapper {
   position: fixed !important;
   top: 0;
   left: 0;
