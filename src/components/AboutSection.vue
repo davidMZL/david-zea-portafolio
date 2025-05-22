@@ -109,7 +109,7 @@ const scrollToSection = (sectionId: string) => {
 };
 
 const downloadCV = () => {
-  const cvUrl = "/docs/cv.pdf";
+  const cvUrl = "docs/cv.pdf";
   const link = document.createElement("a");
   link.href = cvUrl;
   link.download = "David_Zea_CV.pdf";
