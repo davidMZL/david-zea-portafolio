@@ -1,11 +1,7 @@
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 export const vuetify = createVuetify({
-  components,
-  directives,
   theme: {
     defaultTheme: "light",
     themes: {
@@ -21,7 +17,7 @@ export const vuetify = createVuetify({
           purple: "#7E57C2",
           blank: "#FFFFFF",
           grey300: "#E0E0E0",
-          auxiliary: "#0A001B"
+          auxiliary: "#0A001B",
         },
       },
       dark: {
@@ -43,7 +39,7 @@ export const vuetify = createVuetify({
   defaults: {
     global: {
       font: {
-        family: 'Montserrat, sans-serif', // Fuente personalizada
+        family: "Montserrat, sans-serif",
       },
     },
   },
