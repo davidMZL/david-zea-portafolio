@@ -76,14 +76,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
+import { ref, watch } from "vue";
 import emailjs from "@emailjs/browser";
 import {
   EMAILJS_PUBLIC_KEY,
   EMAILJS_SERVICE_ID,
   EMAILJS_TEMPLATE_ID,
 } from "@/common/env-variables.ts";
-import { toast } from "vue3-toastify";
+import { toast } from "vue-sonner";
 
 const form = ref();
 const isFormValid = ref(false);
