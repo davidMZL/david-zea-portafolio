@@ -2,15 +2,15 @@ import { ref } from "vue";
 
 // Imágenes para Assistance-SOS
 const imagenMainAssistance = new URL(
-  "@/assets/images/assistance/assistanceMain.png",
+  "@/assets/images/assistance/assistanceMain.webp",
   import.meta.url,
 ).href;
 const imageAssistanceProject = [
-  new URL("@/assets/images/assistance/assistance1.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance2.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance3.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance4.png", import.meta.url).href,
-  new URL("@/assets/images/assistance/assistance5.png", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance1.webp", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance2.webp", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance3.webp", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance4.webp", import.meta.url).href,
+  new URL("@/assets/images/assistance/assistance5.webp", import.meta.url).href,
 ];
 
 // Imágenes para MedicalFile
