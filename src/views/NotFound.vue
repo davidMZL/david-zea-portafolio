@@ -41,7 +41,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import error404 from '@/assets/page404.png';
+import error404 from '@/assets/page404.webp';
 
 export default defineComponent({
   name: 'NotFound',

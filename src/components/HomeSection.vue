@@ -8,7 +8,11 @@
       >
         <div>
           <h1 class="text-h2 font-weight-bold mb-2">David Zea</h1>
-          <h2 class="text-h4 mb-6 text-grey300">Desarrollador Front-End</h2>
+          <h2 class="text-h4 mb-4 text-grey300">Desarrollador Frontend</h2>
+          <p class="text-h6 mb-6">
+            Vue.js · React · TypeScript — 4 años construyendo plataformas web
+            en tiempo real para salud, seguros y e-commerce.
+          </p>
 
           <div class="mt-8 d-flex flex-wrap justify-center">
             <v-btn
@@ -21,6 +25,18 @@
             >
               <img :src="iconsSvg.briefcase" alt="Projects" class="icon-left" />
               Ver Proyectos
+            </v-btn>
+            <span class="mx-2"></span>
+            <v-btn
+              color="secondary"
+              size="large"
+              class="text-none mt-3"
+              :href="cvUrl"
+              download="David_Zea_CV.pdf"
+              rounded
+            >
+              <img :src="iconsSvg.downloadCloud" alt="" class="icon-left" />
+              Descargar CV
             </v-btn>
             <span class="mx-2"></span>
             <v-btn
@@ -49,6 +65,22 @@
                 style="border-radius: 50%;"
               >
                 <img :src="iconsSvg.githubColor" alt="Github" width="34" height="34" />
+              </v-btn>
+            </a>
+
+            <a
+              class="text-blank"
+              href="https://gitlab.com/davidMZL"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <v-btn
+                icon
+                variant="text"
+                class="mr-3 social-icon-btn"
+                style="border-radius: 50%;"
+              >
+                <img :src="gitlabLogo" alt="GitLab" width="34" height="34" />
               </v-btn>
             </a>
 
@@ -85,6 +117,9 @@
 
 <script setup lang="ts">
 import { gifImages, iconsSvg } from "@/common/resources.ts";
+
+const cvUrl = `${import.meta.env.BASE_URL}docs/cv.pdf`;
+const gitlabLogo = new URL("@/assets/logo/gitlab.svg", import.meta.url).href;
 
 const scrollToSection = (sectionId: string): void => {
   const element = document.getElementById(sectionId);

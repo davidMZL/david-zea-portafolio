@@ -39,32 +39,29 @@
         <div class="about-content">
           <p class="text-h6 mb-6 font-weight-medium">
             ¡Hola! Soy <strong class="highlight">David Zea</strong>,
-            <span class="highlight">Desarrollador Frontend</span> especializado
-            en <span class="highlight">Vue.js</span> con más de 2 años de
-            experiencia.
+            <span class="highlight">Desarrollador Frontend</span> con 4 años de
+            experiencia, especializado en
+            <span class="highlight">Vue.js</span> y
+            <span class="highlight">React</span> con TypeScript.
           </p>
 
           <p class="text-h6 mb-4">
-            Me apasiona crear interfaces atractivas y funcionales, enfocándome
-            en la experiencia del usuario. Aplico buenas prácticas de
-            programación y me comprometo con la calidad del código en cada
-            proyecto y oportunidad.
+            Construyo plataformas web en tiempo real para los sectores de salud,
+            seguros y e-commerce: monitoreo de ambulancias, gestión de casos
+            médicos y sistemas conectados a sensores IoT.
           </p>
 
-          <p class="text-h6 mb-4">He desarrollado plataformas web como:</p>
+          <p class="text-h6 mb-4">
+            Lideré la migración de las plataformas de una aseguradora de Vue.js 2
+            a Vue.js 3 con TypeScript, autenticación con AWS Cognito y
+            mensajería en tiempo real con WebSockets.
+          </p>
 
-          <ul class="text-h6 mb-6 experience-list">
-            <li>
-              <strong>Assistance-SOS:</strong> Sistema de monitoreo de
-              ambulancias en tiempo real con subasta de casos.
-            </li>
-            <li>
-              <strong>Medical-File:</strong> Plataforma para la gestión de
-              medicamentos y monitoreo de unidades de transporte clínico en
-              tiempo real.
-            </li>
-            <li>Migración exitosa de proyectos de Vue.js 2 a Vue.js 3.</li>
-          </ul>
+          <p class="text-h6 mb-6">
+            Cuido la calidad y la entrega: pruebas con Vitest y Jest, revisión
+            de Pull Requests y despliegue seguro con Cloudflare y AWS
+            CloudFront.
+          </p>
 
           <p class="text-h6 mb-4 font-weight-medium">
             🚀 Puedes darle un vistazo a algunos de mis trabajos en la sección
@@ -85,7 +82,7 @@
         @click="downloadCV"
         rounded
       >
-        <img :src="iconsSvg.downloadCloud" alt="LinkedIn" width="24" height="24" />
+        <img :src="iconsSvg.downloadCloud" alt="" width="24" height="24" />
         Descargar CV
       </v-btn>
     </v-row>
@@ -164,22 +161,6 @@ p {
 
 .about-content {
   max-width: 700px;
-}
-
-.experience-list {
-  padding-left: 1.5rem;
-}
-
-.experience-list li {
-  margin-bottom: 0.75rem;
-  position: relative;
-}
-
-.experience-list li::before {
-  content: "▹";
-  position: absolute;
-  left: -1.5rem;
-  color: rgb(var(--v-theme-primary));
 }
 
 .cursor-pointer {

@@ -18,93 +18,52 @@
       </v-col>
     </v-row>
 
-    <!-- FRONTEND SECTION -->
-    <v-row class="mb-8">
-      <v-col cols="12">
-        <div class="category-header">
-          <h3 class="text-h5 font-weight-bold text-blank">FRONTEND</h3>
-          <div class="category-divider"></div>
-        </div>
-      </v-col>
-    </v-row>
+    <template v-for="category in skillCategories" :key="category.title">
+      <v-row class="mt-4 mb-4">
+        <v-col cols="12">
+          <div class="category-header">
+            <h3 class="text-h5 font-weight-bold text-blank">
+              {{ category.title }}
+            </h3>
+            <div class="category-divider"></div>
+          </div>
+        </v-col>
+      </v-row>
 
-    <v-row class="skills-row">
-      <v-col
-        v-for="(skill, index) in skillsMap.frontend"
-        :key="index"
-        cols="4"
-        sm="3"
-        md="2"
-        lg="2"
-        class="text-center mb-6"
-      >
-        <v-hover v-slot="{ isHovering, props }">
-          <v-card
-            v-bind="props"
-            class="skill-card"
-            :class="{ 'on-hover': isHovering }"
-            height="100%"
-            max-width="160"
-            elevation="2"
-          >
-            <v-card-text class="d-flex flex-column align-center py-4">
-              <img
-                :src="skill.icon"
-                :alt="skill.name"
-                class="skill-icon mb-3"
-              />
-              <h3 class="text-subtitle-1 font-weight-medium text-blank">
-                {{ skill.name }}
-              </h3>
-            </v-card-text>
-          </v-card>
-        </v-hover>
-      </v-col>
-    </v-row>
-
-    <!-- TOOLS SECTION -->
-    <v-row class="mt-4 mb-4">
-      <v-col cols="12">
-        <div class="category-header">
-          <h3 class="text-h5 font-weight-bold text-blank">HERRAMIENTAS</h3>
-          <div class="category-divider"></div>
-        </div>
-      </v-col>
-    </v-row>
-
-    <v-row class="skills-row">
-      <v-col
-        v-for="(skill, index) in skillsMap.tools"
-        :key="index"
-        cols="4"
-        sm="3"
-        md="2"
-        lg="2"
-        class="text-center mb-6"
-      >
-        <v-hover v-slot="{ isHovering, props }">
-          <v-card
-            v-bind="props"
-            class="skill-card"
-            :class="{ 'on-hover': isHovering }"
-            height="100%"
-            max-width="160"
-            elevation="2"
-          >
-            <v-card-text class="d-flex flex-column align-center py-4">
-              <img
-                :src="skill.icon"
-                :alt="skill.name"
-                class="skill-icon mb-3"
-              />
-              <h3 class="text-subtitle-1 font-weight-medium text-blank">
-                {{ skill.name }}
-              </h3>
-            </v-card-text>
-          </v-card>
-        </v-hover>
-      </v-col>
-    </v-row>
+      <v-row class="skills-row">
+        <v-col
+          v-for="skill in category.skills"
+          :key="skill.name"
+          cols="4"
+          sm="3"
+          md="2"
+          lg="2"
+          class="text-center mb-6"
+        >
+          <v-hover v-slot="{ isHovering, props }">
+            <v-card
+              v-bind="props"
+              class="skill-card"
+              :class="{ 'on-hover': isHovering }"
+              height="100%"
+              max-width="160"
+              elevation="2"
+            >
+              <v-card-text class="d-flex flex-column align-center py-4">
+                <img
+                  :src="skill.icon"
+                  :alt="skill.name"
+                  class="skill-icon mb-3"
+                />
+                <h3 class="text-subtitle-1 font-weight-medium text-blank">
+                  {{ skill.name }}
+                </h3>
+              </v-card-text>
+            </v-card>
+          </v-hover>
+        </v-col>
+      </v-row>
+    </template>
   </v-container>
 </template>
 
@@ -118,38 +77,61 @@ const logos = Object.fromEntries(
   }),
 );
 
-const frontendSkills = [
-  { name: "Vue.js", icon: logos.vuejs },
-  { name: "TypeScript", icon: logos.typescript },
-  { name: "Pinia Store", icon: logos.piniaStore },
-  { name: "JavaScript", icon: logos.javascript },
-  { name: "HTML5", icon: logos.html5 },
-  { name: "CSS3", icon: logos.css3 },
-  { name: "Google Maps API", icon: logos.googleMaps },
-  { name: "Leaflet", icon: logos.leaflet },
-  { name: "Vuex", icon: logos.vuex },
-  { name: "Vuetify", icon: logos.vuetify },
-  { name: "Tailwind CSS", icon: logos.tailwind },
-];
+interface Skill {
+  name: string;
+  icon: string;
+}
 
-const toolsSkills = [
-  { name: "AWS Amplify", icon: logos.aws },
-  { name: "AWS Cognito", icon: logos.cognito },
-  { name: "Git", icon: logos.git },
-  { name: "GitHub", icon: logos.github },
-  { name: "GitLab", icon: logos.gitlab },
-  { name: "pnpm", icon: logos.pnpm},
-  { name: "NodeJs", icon: logos.nodejs },
-  { name: "WSL", icon: logos.terminalWSL },
-  { name: "Firebase", icon: logos.firebase },
-  { name: "Vite", icon: logos.vite },
-  { name: "Linux", icon: logos.linux },
-];
+interface SkillCategory {
+  title: string;
+  skills: Skill[];
+}
 
-const skillsMap: any = {
-  frontend: frontendSkills,
-  tools: toolsSkills,
-};
+const skillCategories: SkillCategory[] = [
+  {
+    title: "FRONTEND",
+    skills: [
+      { name: "Vue.js", icon: logos.vuejs },
+      { name: "Nuxt", icon: logos.nuxt },
+      { name: "React", icon: logos.react },
+      { name: "Next.js", icon: logos.nextjs },
+      { name: "TypeScript", icon: logos.typescript },
+      { name: "JavaScript", icon: logos.javascript },
+      { name: "Pinia", icon: logos.piniaStore },
+      { name: "Redux", icon: logos.redux },
+      { name: "Vuetify", icon: logos.vuetify },
+      { name: "Tailwind CSS", icon: logos.tailwind },
+      { name: "Leaflet", icon: logos.leaflet },
+    ],
+  },
+  {
+    title: "TESTING",
+    skills: [
+      { name: "Vitest", icon: logos.vitest },
+      { name: "Jest", icon: logos.jest },
+    ],
+  },
+  {
+    title: "CLOUD Y DESPLIEGUE",
+    skills: [
+      { name: "AWS", icon: logos.aws },
+      { name: "AWS Cognito", icon: logos.cognito },
+      { name: "Cloudflare", icon: logos.cloudflare },
+      { name: "Firebase", icon: logos.firebase },
+    ],
+  },
+  {
+    title: "HERRAMIENTAS",
+    skills: [
+      { name: "Git", icon: logos.git },
+      { name: "GitHub", icon: logos.github },
+      { name: "GitLab", icon: logos.gitlab },
+      { name: "Vite", icon: logos.vite },
+      { name: "pnpm", icon: logos.pnpm },
+      { name: "Linux", icon: logos.linux },
+    ],
+  },
+];
 </script>
 
 <style scoped>

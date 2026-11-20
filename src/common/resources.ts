@@ -1,5 +1,5 @@
 //Auto-import icons from assets/icons/*.svg
-const modules = import.meta.glob('@/assets/icons/*.svg', { eager: true });
+const modules = import.meta.glob<{ default: string }>('@/assets/icons/*.svg', { eager: true });
 function getFilename(path: string) {
   return path
     .split('/')
@@ -8,10 +8,8 @@ function getFilename(path: string) {
     .replace(/-([a-z])/g, (_, l) => l.toUpperCase());
 }
 export const iconsSvg: Record<string, string> = {};
-for (const path in modules) {
-  const name = getFilename(path); // ej. 'github-color' → 'githubColor'
-  // @ts-ignore
-  iconsSvg[name] = modules[path].default;
+for (const [path, module] of Object.entries(modules)) {
+  iconsSvg[getFilename(path)] = module.default; // ej. 'github-color' → 'githubColor'
 }
 
 

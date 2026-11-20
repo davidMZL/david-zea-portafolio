@@ -2,23 +2,23 @@
   <NavBar :active-section="activeSection" />
 
   <v-main max-width="1300px" class="mx-auto">
-    <section id="home" ref="homeSection" class="section">
+    <section id="home" class="section">
       <HomeSection />
     </section>
 
-    <section id="about" ref="aboutSection" class="section">
+    <section id="about" class="section">
       <AboutSection />
     </section>
 
-    <section id="projects" ref="projectsSection" class="section">
+    <section id="projects" class="section">
       <ProjectsSection />
     </section>
 
-    <section id="skills" ref="skillsSection" class="section">
+    <section id="skills" class="section">
       <SkillsSection />
     </section>
 
-    <section id="contact" ref="contactSection" class="section">
+    <section id="contact" class="section">
       <ContactSection />
     </section>
   </v-main>
@@ -40,45 +40,21 @@ import AboutSection from "@/components/AboutSection.vue";
 import ProjectsSection from "@/components/Projects/ProjectsSection.vue";
 import SkillsSection from "@/components/SkillsSection.vue";
 import ContactSection from "@/components/ContactSection.vue";
-const homeSection = ref<HTMLElement | null>(null);
-const aboutSection = ref<HTMLElement | null>(null);
-const projectsSection = ref<HTMLElement | null>(null);
-const skillsSection = ref<HTMLElement | null>(null);
-const contactSection = ref<HTMLElement | null>(null);
-
 const activeSection = ref("home");
+let observer: IntersectionObserver | null = null;
 
-const checkActiveSection = () => {
-  const scrollPosition = window.scrollY + 100;
-
-  const sections = [
-    { id: "home", ref: homeSection },
-    { id: "about", ref: aboutSection },
-    { id: "projects", ref: projectsSection },
-    { id: "skills", ref: skillsSection },
-    { id: "contact", ref: contactSection },
-  ];
-
-  for (const section of sections) {
-    if (!section.ref.value) continue;
-
-    const element = section.ref.value;
-    const offsetTop = element.offsetTop;
-    const height = element.offsetHeight;
-
-    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-      activeSection.value = section.id;
-      break;
-    }
-  }
-};
-
+// La sección que cruza la línea media del viewport es la activa.
 onMounted(() => {
-  window.addEventListener("scroll", checkActiveSection);
-  checkActiveSection();
+  const io = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.find((entry) => entry.isIntersecting);
+      if (visible) activeSection.value = visible.target.id;
+    },
+    { rootMargin: "-50% 0px -50% 0px" },
+  );
+  document.querySelectorAll("section.section").forEach((el) => io.observe(el));
+  observer = io;
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", checkActiveSection);
-});
+onUnmounted(() => observer?.disconnect());
 </script>
