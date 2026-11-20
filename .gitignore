@@ -32,3 +32,5 @@ coverage
 .env.local
 .env.production
 *.avif_Zone.Identifier
+
+.claude
