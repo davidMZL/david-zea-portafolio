@@ -14,7 +14,7 @@
           border: 1px solid rgba(255, 255, 255, 0.2);
         "
       >
-        <h2 class="text-h3 text-blank">Sobre Mí</h2>
+        <h2 class="text-h3 text-blank">{{ t.about.title }}</h2>
       </v-col>
     </v-row>
 
@@ -26,7 +26,7 @@
       >
         <v-img
           :src="getImageDeveloper"
-          alt="David Zea Profile"
+          :alt="t.about.profileAlt"
           max-width="800"
           class="rounded-circle shadow-sm profile-image bg-transparent"
         ></v-img>
@@ -37,41 +37,24 @@
         md="6"
       >
         <div class="about-content">
-          <p class="text-h6 mb-6 font-weight-medium">
-            ¡Hola! Soy <strong class="highlight">David Zea</strong>,
-            <span class="highlight">Desarrollador Frontend</span> con 4 años de
-            experiencia, especializado en
-            <span class="highlight">Vue.js</span> y
-            <span class="highlight">React</span> con TypeScript.
+          <!-- prettier-ignore -->
+          <p class="text-h6 mb-6 font-weight-medium">{{ t.about.intro[0] }}<strong class="highlight">David Zea</strong>{{ t.about.intro[1] }}<span class="highlight">{{ t.home.role }}</span>{{ t.about.intro[2] }}<span class="highlight">Vue.js</span>{{ t.about.intro[3] }}<span class="highlight">React</span>{{ t.about.intro[4] }}</p>
+
+          <p
+            v-for="(paragraph, i) in t.about.paragraphs"
+            :key="i"
+            class="text-h6"
+            :class="i === t.about.paragraphs.length - 1 ? 'mb-6' : 'mb-4'"
+          >
+            {{ paragraph }}
           </p>
 
-          <p class="text-h6 mb-4">
-            Construyo plataformas web en tiempo real para los sectores de salud,
-            seguros y e-commerce: monitoreo de ambulancias, gestión de casos
-            médicos y sistemas conectados a sensores IoT.
-          </p>
-
-          <p class="text-h6 mb-4">
-            Lideré la migración de las plataformas de una aseguradora de Vue.js 2
-            a Vue.js 3 con TypeScript, autenticación con AWS Cognito y
-            mensajería en tiempo real con WebSockets.
-          </p>
-
-          <p class="text-h6 mb-6">
-            Cuido la calidad y la entrega: pruebas con Vitest y Jest, revisión
-            de Pull Requests y despliegue seguro con Cloudflare y AWS
-            CloudFront.
-          </p>
-
-          <p class="text-h6 mb-4 font-weight-medium">
-            🚀 Puedes darle un vistazo a algunos de mis trabajos en la sección
-            <span
+          <!-- prettier-ignore -->
+          <p class="text-h6 mb-4 font-weight-medium">{{ t.about.seeWork.before }}<a
+              href="#projects"
               class="font-weight-bold cursor-pointer highlight"
-              @click="scrollToSection('projects')"
-            >
-              PROYECTOS </span
-            >.
-          </p>
+              @click.prevent="scrollToSection('projects')"
+            >{{ t.about.seeWork.link }}</a>{{ t.about.seeWork.after }}</p>
         </div>
       </v-col>
     </v-row>
@@ -79,18 +62,23 @@
       <v-btn
         color="secondary"
         class="mt-4 text-none"
-        @click="downloadCV"
+        :href="cvUrl"
+        :download="t.cv.downloadName"
         rounded
       >
         <img :src="iconsSvg.downloadCloud" alt="" width="24" height="24" />
-        Descargar CV
+        {{ t.about.downloadCv }}
       </v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import {iconsSvg} from "@/common/resources.ts";
+import { useI18n } from "@/i18n";
+
+const { t } = useI18n();
 
 const getImageDeveloper = new URL("@/assets/programmer.svg", import.meta.url)
   .href;
@@ -105,15 +93,7 @@ const scrollToSection = (sectionId: string) => {
   }
 };
 
-const downloadCV = () => {
-  const cvUrl = "docs/cv.pdf";
-  const link = document.createElement("a");
-  link.href = cvUrl;
-  link.download = "David_Zea_CV.pdf";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+const cvUrl = computed(() => `${import.meta.env.BASE_URL}${t.value.cv.file}`);
 </script>
 
 <style scoped>

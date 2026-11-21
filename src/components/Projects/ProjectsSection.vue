@@ -15,7 +15,9 @@
           border: 1px solid rgba(255, 255, 255, 0.2);
         "
       >
-        <h2 class="text-h3 description-text text-blank">Proyectos</h2>
+        <h2 class="text-h3 description-text text-blank">
+          {{ t.projects.title }}
+        </h2>
       </v-col>
     </v-row>
     <v-row class="justify-center align-center text-center mb-8">
@@ -30,8 +32,7 @@
         "
       >
         <p class="text-h6 description-text text-blank font-weight-regular">
-          Soluciones frontend escalables, arquitecturas limpias y plataformas en
-          tiempo real.
+          {{ t.projects.subtitle }}
         </p>
       </v-col>
     </v-row>
@@ -55,7 +56,7 @@
           >
             <v-img
               :src="project.image"
-              :alt="project.title"
+              :alt="tr(project.title)"
               height="220"
               cover
               gradient="to bottom, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.9)"
@@ -72,7 +73,7 @@
                   <v-card-title
                     class="text-white text-h5 font-weight-bold pa-0"
                   >
-                    {{ project.title }}
+                    {{ tr(project.title) }}
                   </v-card-title>
                 </div>
               </div>
@@ -80,7 +81,7 @@
 
             <v-card-text class="pt-4">
               <p class="text-body-2 text-grey-darken-1 mb-3">
-                {{ project.shortDescription }}
+                {{ tr(project.shortDescription) }}
               </p>
               <div class="mt-4 tech-chips">
                 <v-chip
@@ -105,14 +106,9 @@
                 class="project-button px-6"
               >
                 <v-icon class="mr-2" size="small">
-                  <img
-                    :src="iconsSvg.search"
-                    alt=""
-                    width="20"
-                    height="20"
-                  />
+                  <img :src="iconsSvg.search" alt="" width="20" height="20" />
                 </v-icon>
-                Análisis Técnico
+                {{ t.projects.technicalAnalysis }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -126,13 +122,10 @@
       transition="dialog-bottom-transition"
       overlay-opacity="0.8"
     >
-      <v-card
-        v-if="selectedProject"
-        class="project-detail-card rounded-xl"
-      >
+      <v-card v-if="selectedProject" class="project-detail-card rounded-xl">
         <v-img
           :src="selectedProject.image"
-          :alt="selectedProject.title"
+          :alt="tr(selectedProject.title)"
           height="140"
           cover
           gradient="to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%"
@@ -150,18 +143,19 @@
                 {{ selectedProject.role }}
               </p>
               <h2 class="text-white text-h4 font-weight-bold">
-                {{ selectedProject.title }}
+                {{ tr(selectedProject.title) }}
               </h2>
             </div>
             <v-btn
               icon
               variant="tonal"
               color="white"
-              aria-label="Cerrar detalle del proyecto"
+              :aria-label="t.projects.closeDetail"
               @click="dialog = false"
               size="small"
+              elevation="4"
             >
-              <v-icon>mdi-close</v-icon>
+              <v-icon color="blue" :icon="mdiClose" />
             </v-btn>
           </div>
         </v-img>
@@ -170,29 +164,35 @@
           <v-row>
             <v-col cols="12" md="7">
               <h3 class="text-h6 font-weight-bold mb-3 text-primary">
-                <v-icon color="primary" class="mr-2" size="small"
-                  >mdi-information</v-icon
-                >
-                Resumen del Proyecto
+                <v-icon
+                  color="primary"
+                  class="mr-2"
+                  size="small"
+                  :icon="mdiInformation"
+                />
+                {{ t.projects.summary }}
               </h3>
               <p class="text-body-1 mb-6 text-grey-darken-3">
-                {{ selectedProject.shortDescription }}
+                {{ tr(selectedProject.shortDescription) }}
               </p>
 
               <h3 class="text-h6 font-weight-bold mb-3 text-primary">
-                <v-icon color="primary" class="mr-2" size="small"
-                  >mdi-rocket-launch</v-icon
-                >
-                Reto Técnico e Impacto
+                <v-icon
+                  color="primary"
+                  class="mr-2"
+                  size="small"
+                  :icon="mdiRocketLaunch"
+                />
+                {{ t.projects.challenge }}
               </h3>
               <p class="text-body-1 mb-6 text-grey-darken-3">
-                {{ selectedProject.impact }}
+                {{ tr(selectedProject.impact) }}
               </p>
             </v-col>
 
             <v-col cols="12" md="5" class="bg-grey-lighten-4 rounded-lg pa-6">
               <h3 class="text-subtitle-1 font-weight-bold mb-3 text-primary">
-                Stack Tecnológico
+                {{ t.projects.stack }}
               </h3>
               <div class="d-flex flex-wrap mb-6">
                 <v-chip
@@ -208,11 +208,11 @@
               </div>
 
               <h3 class="text-subtitle-1 font-weight-bold mb-2 text-primary">
-                Tiempo de Elaboración
+                {{ t.projects.duration }}
               </h3>
               <p class="text-body-2 font-weight-medium text-grey-darken-2">
-                <v-icon size="small" class="mr-1 pb-1">mdi-calendar</v-icon>
-                {{ selectedProject.timeBuilding }}
+                <v-icon size="small" class="mr-1 pb-1" :icon="mdiCalendar" />
+                {{ tr(selectedProject.timeBuilding) }}
               </p>
             </v-col>
           </v-row>
@@ -222,7 +222,7 @@
             class="mt-8 pt-6 border-t"
           >
             <h3 class="text-h6 font-weight-bold mb-4 text-primary">
-              Galería de la Interfaz
+              {{ t.projects.gallery }}
             </h3>
             <v-row>
               <v-col
@@ -240,14 +240,24 @@
                   @mouseleave="hoveredGalleryIndex = null"
                   role="button"
                   tabindex="0"
-                  :aria-label="`Ampliar captura ${imgIndex + 1} de ${selectedProject.title}`"
+                  :aria-label="
+                    t.projects.enlargeCapture(
+                      imgIndex + 1,
+                      tr(selectedProject.title),
+                    )
+                  "
                   @click="openImage(image)"
                   @keydown.enter.prevent="openImage(image)"
                   @keydown.space.prevent="openImage(image)"
                 >
                   <v-img
                     :src="image"
-                    :alt="`Captura ${imgIndex + 1} de ${selectedProject.title}`"
+                    :alt="
+                      t.projects.captureAlt(
+                        imgIndex + 1,
+                        tr(selectedProject.title),
+                      )
+                    "
                     height="150"
                     cover
                     class="rounded-lg"
@@ -258,9 +268,11 @@
                       scrim="#036358"
                       class="align-center justify-center"
                     >
-                      <v-icon color="white" size="x-large"
-                        >mdi-magnify-plus</v-icon
-                      >
+                      <v-icon
+                        color="white"
+                        size="x-large"
+                        :icon="mdiMagnifyPlus"
+                      />
                     </v-overlay>
                   </v-img>
                 </v-card>
@@ -279,15 +291,19 @@
             icon
             variant="text"
             color="white"
-            aria-label="Cerrar imagen"
+            :aria-label="t.projects.closeImage"
             @click="imageDialog = false"
           >
-            <v-icon>mdi-close</v-icon>
+            <v-icon :icon="mdiClose" />
           </v-btn>
         </v-card-actions>
         <v-img
           :src="selectedImage"
-          :alt="`Captura ampliada de ${selectedProject?.title ?? 'proyecto'}`"
+          :alt="
+            selectedProject
+              ? t.projects.enlargedAlt(tr(selectedProject.title))
+              : ''
+          "
           contain
           max-height="90vh"
           class="full-image"
@@ -301,6 +317,16 @@
 import { ref, computed } from "vue";
 import { projects } from "@/components/Projects/ProjectsSection.ts";
 import { iconsSvg } from "@/common/resources.ts";
+import { useI18n } from "@/i18n";
+import {
+  mdiCalendar,
+  mdiClose,
+  mdiInformation,
+  mdiMagnifyPlus,
+  mdiRocketLaunch,
+} from "@mdi/js";
+
+const { t, tr } = useI18n();
 
 const dialog = ref(false);
 const selectedProjectIndex = ref(0);

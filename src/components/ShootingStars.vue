@@ -13,7 +13,8 @@ interface Star {
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const stars: Star[] = [];
-const starCount = 20; // Más estrellas para notar la profundidad
+// Menos estrellas en pantallas pequeñas: menos trabajo por frame en móvil
+const getStarCount = () => (window.innerWidth < 600 ? 8 : 20);
 const animationFrameId = ref<number | null>(null);
 
 const createStar = (canvasWidth: number, canvasHeight: number): Star => {
@@ -113,6 +114,7 @@ const resizeCanvas = () => {
     canvas.height = window.innerHeight;
 
     stars.length = 0;
+    const starCount = getStarCount();
     for (let i = 0; i < starCount; i++) {
       stars.push(createStar(canvas.width, canvas.height));
     }

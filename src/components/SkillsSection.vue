@@ -5,25 +5,24 @@
         <h2
           class="text-h3 font-weight-bold mb-2"
         >
-          Habilidades
+          {{ t.skills.title }}
         </h2>
         <div class="divider"></div>
         <p
           class="mt-4 text-body-1 mx-auto"
           style="max-width: 700px"
         >
-          Estas son las tecnologías y herramientas con las que trabajo
-          regularmente.
+          {{ t.skills.subtitle }}
         </p>
       </v-col>
     </v-row>
 
-    <template v-for="category in skillCategories" :key="category.title">
+    <template v-for="category in skillCategories" :key="category.id">
       <v-row class="mt-4 mb-4">
         <v-col cols="12">
           <div class="category-header">
             <h3 class="text-h5 font-weight-bold text-blank">
-              {{ category.title }}
+              {{ t.skills.categories[category.id] }}
             </h3>
             <div class="category-divider"></div>
           </div>
@@ -68,6 +67,11 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "@/i18n";
+import type { Messages } from "@/i18n/es";
+
+const { t } = useI18n();
+
 const logoModules = import.meta.glob("@/assets/logo/*.svg", { eager: true });
 
 const logos = Object.fromEntries(
@@ -83,13 +87,13 @@ interface Skill {
 }
 
 interface SkillCategory {
-  title: string;
+  id: keyof Messages["skills"]["categories"];
   skills: Skill[];
 }
 
 const skillCategories: SkillCategory[] = [
   {
-    title: "FRONTEND",
+    id: "frontend",
     skills: [
       { name: "Vue.js", icon: logos.vuejs },
       { name: "Nuxt", icon: logos.nuxt },
@@ -105,14 +109,14 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "TESTING",
+    id: "testing",
     skills: [
       { name: "Vitest", icon: logos.vitest },
       { name: "Jest", icon: logos.jest },
     ],
   },
   {
-    title: "CLOUD Y DESPLIEGUE",
+    id: "cloud",
     skills: [
       { name: "AWS", icon: logos.aws },
       { name: "AWS Cognito", icon: logos.cognito },
@@ -121,7 +125,7 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "HERRAMIENTAS",
+    id: "tools",
     skills: [
       { name: "Git", icon: logos.git },
       { name: "GitHub", icon: logos.github },

@@ -4,13 +4,13 @@
       <VCol cols="12">
         <VCard class="error-card">
           <VCardTitle>
-            <span class="headline">Pagina no encontrada ⚠️</span>
+            <span class="headline">{{ t.notFound.title }}</span>
           </VCardTitle>
           <VCardText>
             <VContainer>
               <VRow>
                 <VCol cols="12">
-                  <p>No pudimos encontrar la página que estás buscando...</p>
+                  <p>{{ t.notFound.message }}</p>
                 </VCol>
               </VRow>
               <VRow>
@@ -28,7 +28,7 @@
                   outlined
                   @click="goBack"
               >
-                <span style="font-size: large">Regresar</span>
+                <span style="font-size: large">{{ t.notFound.back }}</span>
               </VBtn>
             </VCol>
           </VCardActions>
@@ -42,14 +42,16 @@
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import error404 from '@/assets/page404.webp';
+import { useI18n } from '@/i18n';
 
 export default defineComponent({
   name: 'NotFound',
   setup() {
     const router = useRouter();
+    const { t } = useI18n();
     const goBack = () => router.push({ path: '/' });
 
-    return { goBack, error404 };
+    return { goBack, error404, t };
   },
 });
 </script>

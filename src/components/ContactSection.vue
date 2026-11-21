@@ -4,7 +4,7 @@
       <v-col cols="12" class="text-center mb-5">
         <v-card-title class="text-center align-center card-hover">
           <h2 class="text-center font-weight-bold text-h3 text-grey300">
-            Contáctame
+            {{ t.contact.title }}
           </h2>
           <div class="mx-auto divider"></div>
         </v-card-title>
@@ -15,7 +15,7 @@
       <v-col cols="12" md="12">
         <v-card class="pa-8 elevation-3 card-hover">
           <h3 class="text-h5 font-weight-bold mb-6 text-blank">
-            Envíame un Mensaje
+            {{ t.contact.subtitle }}
           </h3>
 
           <v-form ref="form">
@@ -23,7 +23,7 @@
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="formData.name"
-                  label="Nombre"
+                  :label="t.contact.name"
                   variant="outlined"
                   class="text-blank"
                   :rules="[rules.required]"
@@ -34,7 +34,7 @@
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="formData.email"
-                  label="Email"
+                  :label="t.contact.email"
                   variant="outlined"
                   class="text-blank"
                   :rules="[rules.required, rules.email]"
@@ -45,7 +45,7 @@
               <v-col cols="12">
                 <v-textarea
                   v-model="formData.message"
-                  label="Mensaje"
+                  :label="t.contact.message"
                   variant="outlined"
                   rows="5"
                   class="text-blank"
@@ -64,7 +64,7 @@
                   @click="submitForm"
                   rounded
                 >
-                  Enviar
+                  {{ t.contact.send }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -84,6 +84,9 @@ import {
   EMAILJS_TEMPLATE_ID,
 } from "@/common/env-variables.ts";
 import { toast } from "vue-sonner";
+import { useI18n } from "@/i18n";
+
+const { t } = useI18n();
 
 const form = ref();
 const isFormValid = ref(false);
@@ -92,10 +95,10 @@ const isSubmitting = ref(false);
 const formData = ref({ name: "", email: "", message: "" });
 
 const rules = {
-  required: (value: string) => !!value || "Este campo es requerido",
+  required: (value: string) => !!value || t.value.contact.required,
   email: (value: string) => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(value) || "example-email@your-email.com";
+    return pattern.test(value) || t.value.contact.invalidEmail;
   },
 };
 
@@ -116,11 +119,11 @@ const submitForm = async () => {
       },
       EMAILJS_PUBLIC_KEY,
     );
-    toast.success("¡Mensaje enviado con éxito!");
+    toast.success(t.value.contact.success);
     form.value.reset();
   } catch (error) {
     console.error("Error al enviar el correo:", error);
-    toast.error("Error al enviar el mensaje");
+    toast.error(t.value.contact.error);
   }
 
   isSubmitting.value = false;

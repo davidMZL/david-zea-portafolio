@@ -8,11 +8,8 @@
       >
         <div>
           <h1 class="text-h2 font-weight-bold mb-2">David Zea</h1>
-          <h2 class="text-h4 mb-4 text-grey300">Desarrollador Frontend</h2>
-          <p class="text-h6 mb-6">
-            Vue.js · React · TypeScript — 4 años construyendo plataformas web
-            en tiempo real para salud, seguros y e-commerce.
-          </p>
+          <h2 class="text-h4 mb-4 text-grey300">{{ t.home.role }}</h2>
+          <p class="text-h6 mb-6">{{ t.home.tagline }}</p>
 
           <div class="mt-8 d-flex flex-wrap justify-center">
             <v-btn
@@ -23,8 +20,8 @@
               @click="scrollToSection('projects')"
               rounded
             >
-              <img :src="iconsSvg.briefcase" alt="Projects" class="icon-left" />
-              Ver Proyectos
+              <img :src="iconsSvg.briefcase" alt="" class="icon-left" />
+              {{ t.home.viewProjects }}
             </v-btn>
             <span class="mx-2"></span>
             <v-btn
@@ -32,11 +29,11 @@
               size="large"
               class="text-none mt-3"
               :href="cvUrl"
-              download="David_Zea_CV.pdf"
+              :download="t.cv.downloadName"
               rounded
             >
               <img :src="iconsSvg.downloadCloud" alt="" class="icon-left" />
-              Descargar CV
+              {{ t.home.downloadCv }}
             </v-btn>
             <span class="mx-2"></span>
             <v-btn
@@ -46,8 +43,8 @@
               @click="scrollToSection('contact')"
               rounded
             >
-              <img :src="iconsSvg.mail" alt="Contact" class="icon-left" />
-              Contáctame
+              <img :src="iconsSvg.mail" alt="" class="icon-left" />
+              {{ t.home.contact }}
             </v-btn>
           </div>
 
@@ -107,7 +104,7 @@
     <v-row align="center" justify="center">
       <v-img
         :src="gifImages.mouseGif"
-        alt="mouse"
+        alt=""
         max-width="45"
         class="rounded-circle shadow-sm bg-transparent"
       />
@@ -116,9 +113,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { gifImages, iconsSvg } from "@/common/resources.ts";
+import { useI18n } from "@/i18n";
 
-const cvUrl = `${import.meta.env.BASE_URL}docs/cv.pdf`;
+const { t } = useI18n();
+
+const cvUrl = computed(() => `${import.meta.env.BASE_URL}${t.value.cv.file}`);
 const gitlabLogo = new URL("@/assets/logo/gitlab.svg", import.meta.url).href;
 
 const scrollToSection = (sectionId: string): void => {

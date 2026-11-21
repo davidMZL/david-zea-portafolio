@@ -7,7 +7,9 @@
       transition: all 0.3s ease;
       border-radius: 12px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.1);
+      /* Vidrio oscuro: el texto blanco se lee también sobre las tarjetas blancas.
+         !important porque la clase bg-transparent de Vuetify lo anula. */
+      background: rgba(12, 13, 19, 0.6) !important;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     "
@@ -30,14 +32,25 @@
         rounded
         @click="scrollToSection(item.id)"
       >
-        {{ item.title }}
+        {{ t.nav[item.id] }}
       </v-btn>
     </div>
+
+    <v-btn
+      variant="outlined"
+      color="blank"
+      class="mx-1"
+      rounded
+      :aria-label="t.nav.switchLanguage"
+      @click="toggleLocale"
+    >
+      {{ locale === "es" ? "EN" : "ES" }}
+    </v-btn>
 
     <!-- Mobile Navigation -->
     <v-app-bar-nav-icon
       class="hidden-md-and-up"
-      aria-label="Abrir menú"
+      :aria-label="t.nav.openMenu"
       @click="drawer = !drawer"
     />
 
@@ -49,7 +62,7 @@
           :class="{ 'active-nav-item': activeSection === item.id }"
           @click="scrollToSection(item.id)"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title>{{ t.nav[item.id] }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -57,18 +70,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useI18n } from "@/i18n";
 
 const drawer = ref(false);
 const activeSection = ref("home");
 
+const { t, locale, toggleLocale } = useI18n();
+
 const navItems = [
-  { id: "home", title: "Inicio" },
-  { id: "about", title: "Sobre Mí" },
-  { id: "projects", title: "Proyectos" },
-  { id: "skills", title: "Habilidades" },
-  { id: "contact", title: "Contáctame" },
-];
+  { id: "home" },
+  { id: "about" },
+  { id: "projects" },
+  { id: "skills" },
+  { id: "contact" },
+] as const;
 
 const scrollToSection = (sectionId: string) => {
   drawer.value = false;

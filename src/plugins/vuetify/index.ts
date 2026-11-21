@@ -1,7 +1,14 @@
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
+// Iconos SVG: solo entran al bundle los que se importan desde @mdi/js
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 export const vuetify = createVuetify({
+  icons: {
+    defaultSet: "mdi",
+    aliases,
+    sets: { mdi },
+  },
   theme: {
     defaultTheme: "light",
     themes: {
