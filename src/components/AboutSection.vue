@@ -14,7 +14,7 @@
           border: 1px solid rgba(255, 255, 255, 0.2);
         "
       >
-        <p class="text-h3 text-blank">Sobre Mí</p>
+        <h2 class="text-h3 text-blank">Sobre Mí</h2>
       </v-col>
     </v-row>
 

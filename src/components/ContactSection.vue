@@ -3,9 +3,9 @@
     <v-row>
       <v-col cols="12" class="text-center mb-5">
         <v-card-title class="text-center align-center card-hover">
-          <span class="text-center font-weight-bold text-h3 text-grey300">
+          <h2 class="text-center font-weight-bold text-h3 text-grey300">
             Contáctame
-          </span>
+          </h2>
           <div class="mx-auto divider"></div>
         </v-card-title>
       </v-col>

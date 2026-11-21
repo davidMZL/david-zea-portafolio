@@ -15,7 +15,7 @@
           border: 1px solid rgba(255, 255, 255, 0.2);
         "
       >
-        <p class="text-h3 description-text text-blank">Proyectos</p>
+        <h2 class="text-h3 description-text text-blank">Proyectos</h2>
       </v-col>
     </v-row>
     <v-row class="justify-center align-center text-center mb-8">
@@ -55,6 +55,7 @@
           >
             <v-img
               :src="project.image"
+              :alt="project.title"
               height="220"
               cover
               gradient="to bottom, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.9)"
@@ -106,7 +107,7 @@
                 <v-icon class="mr-2" size="small">
                   <img
                     :src="iconsSvg.search"
-                    alt="Search"
+                    alt=""
                     width="20"
                     height="20"
                   />
@@ -131,6 +132,7 @@
       >
         <v-img
           :src="selectedProject.image"
+          :alt="selectedProject.title"
           height="140"
           cover
           gradient="to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%"
@@ -155,6 +157,7 @@
               icon
               variant="tonal"
               color="white"
+              aria-label="Cerrar detalle del proyecto"
               @click="dialog = false"
               size="small"
             >
@@ -235,9 +238,20 @@
                   :elevation="hoveredGalleryIndex === imgIndex ? 4 : 0"
                   @mouseenter="hoveredGalleryIndex = imgIndex"
                   @mouseleave="hoveredGalleryIndex = null"
+                  role="button"
+                  tabindex="0"
+                  :aria-label="`Ampliar captura ${imgIndex + 1} de ${selectedProject.title}`"
                   @click="openImage(image)"
+                  @keydown.enter.prevent="openImage(image)"
+                  @keydown.space.prevent="openImage(image)"
                 >
-                  <v-img :src="image" height="150" cover class="rounded-lg">
+                  <v-img
+                    :src="image"
+                    :alt="`Captura ${imgIndex + 1} de ${selectedProject.title}`"
+                    height="150"
+                    cover
+                    class="rounded-lg"
+                  >
                     <v-overlay
                       :model-value="hoveredGalleryIndex === imgIndex"
                       contained
@@ -261,12 +275,19 @@
       <v-card flat class="image-dialog-card">
         <v-card-actions class="pa-3">
           <v-spacer />
-          <v-btn icon variant="text" color="white" @click="imageDialog = false">
+          <v-btn
+            icon
+            variant="text"
+            color="white"
+            aria-label="Cerrar imagen"
+            @click="imageDialog = false"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-actions>
         <v-img
           :src="selectedImage"
+          :alt="`Captura ampliada de ${selectedProject?.title ?? 'proyecto'}`"
           contain
           max-height="90vh"
           class="full-image"

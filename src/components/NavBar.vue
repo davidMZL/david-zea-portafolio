@@ -35,7 +35,11 @@
     </div>
 
     <!-- Mobile Navigation -->
-    <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
+    <v-app-bar-nav-icon
+      class="hidden-md-and-up"
+      aria-label="Abrir menú"
+      @click="drawer = !drawer"
+    />
 
     <v-navigation-drawer v-model="drawer" temporary location="right">
       <v-list>
