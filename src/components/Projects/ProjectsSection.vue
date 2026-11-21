@@ -37,7 +37,7 @@
     </v-row>
 
     <v-fade-transition>
-      <v-row>
+      <v-row justify="center">
         <v-col
           v-for="(project, index) in projects"
           :key="index"
@@ -127,7 +127,7 @@
     >
       <v-card
         v-if="selectedProject"
-        class="project-detail-card rounded-xl overflow-hidden"
+        class="project-detail-card rounded-xl"
       >
         <v-img
           :src="selectedProject.image"

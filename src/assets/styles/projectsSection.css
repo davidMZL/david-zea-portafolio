@@ -89,7 +89,6 @@
 /* Estilos para la ventana de detalles */
 .project-detail-card {
   border-radius: 16px;
-  overflow: hidden;
 }
 
 .detail-header-image {
